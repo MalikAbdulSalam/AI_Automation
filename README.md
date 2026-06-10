@@ -1,3 +1,6 @@
+📢📢 Attention Please 📢📢
+New Assignment has beed added in "Tasks" folder
+See in "Tasks/Assignment_1" file
 
 
 [Lecture 1](https://malikabdulsalam.github.io/AI_Automation/1-AI_Automation.html)
