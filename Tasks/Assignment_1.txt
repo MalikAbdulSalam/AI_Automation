@@ -1,0 +1,2 @@
+Create a Github Account
+Create repo with the name of "AI_Automation"
