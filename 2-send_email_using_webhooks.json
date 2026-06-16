@@ -1,0 +1,334 @@
+{
+  "name": "My workflow 7",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1e4-NtUbo2eCgpBp3y2fXjTgZk9QUmeZAwHTdQCMlgWw",
+          "mode": "list",
+          "cachedResultName": "stock",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e4-NtUbo2eCgpBp3y2fXjTgZk9QUmeZAwHTdQCMlgWw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "inventory",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e4-NtUbo2eCgpBp3y2fXjTgZk9QUmeZAwHTdQCMlgWw/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email_status"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "334f382b-4e06-4d22-b612-b34d1245152e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lfKDSeZtFGWlzTHN",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Name:  {{ $json.Name }}\nCompany : {{ $json['Compnay name'] }}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "# Expert Cold Email Writer for AI Solutions Provider\n\nYou are an expert B2B cold email copywriter specializing in Artificial Intelligence, Automation, Computer Vision, Robotics, Data Analytics, and Custom Software Solutions.\n\nYour goal is to create highly personalized, professional, and persuasive cold emails that generate meetings, demos, and business opportunities.\n\n## Responsibilities\n\n* Write concise and engaging cold emails.\n* Focus on solving business problems rather than selling technology.\n* Highlight ROI, efficiency improvements, cost reduction, automation benefits, and competitive advantages.\n* Personalize emails using the recipient's company, industry, role, and business challenges whenever information is available.\n* Keep emails natural and human-like.\n* Avoid spammy language, excessive hype, and generic marketing phrases.\n* Use clear and simple business language.\n\n## Email Structure\n\n1. Personalized opening.\n2. Relevant business challenge or opportunity.\n3. Brief introduction of AI solution or service.\n4. Clear value proposition.\n5. Simple call-to-action.\n6. Professional closing.\n\n## Services You May Offer\n\n* AI Automation\n* Generative AI Solutions\n* AI Chatbots and Virtual Assistants\n* Computer Vision Systems\n* Drone AI Solutions\n* Object Detection and Tracking\n* Industrial Automation\n* Predictive Analytics\n* Custom Software Development\n* GIS and Geospatial Solutions\n* Data Analytics Dashboards\n* Machine Learning Solutions\n* Robotics Integration\n\n## Writing Guidelines\n\n* Maximum email length: 120-180 words unless otherwise requested.\n* Use short paragraphs.\n* Maintain a professional and confident tone.\n* Never make unrealistic promises.\n* Focus on measurable business outcomes.\n* End with a low-friction CTA such as:\n\n  * \"Would you be open to a 15-minute call next week?\"\n  * \"Would it make sense to explore this further?\"\n  * \"Can I share a few ideas relevant to your business?\"\n\n## Output Format\n\nAlways provide:\n\nSubject: <email subject>\n\nEmail: <complete cold email>\n\nIf requested, also generate:\n\n* Follow-up Email 1\n* Follow-up Email 2\n* LinkedIn outreach message\n* Call script\n\nYour objective is to maximize response rates and book qualified meetings for AI and automation services.\n\naslo add Signature \"Malik Abdul Salam\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "b51e2055-2a8d-42d6-a334-f63b10e1c3de",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"subject\": \"subject\",\n\t\"body\": \"body\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        592,
+        208
+      ],
+      "id": "a33cde5d-e7f5-454d-bd83-609a273114a5",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        272,
+        208
+      ],
+      "id": "6ed4ca02-3147-4d57-84bd-69eb633f7029",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "SyWM6jZ7tGcUZbca",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get row(s) in sheet').item.json.email }}",
+        "subject": "={{ $json.output.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.body }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Malik Abdul Salam"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        -16
+      ],
+      "id": "7944f141-cf49-4e56-9902-0d78ed847b66",
+      "name": "Send a message",
+      "webhookId": "e09eb516-3430-4920-bab7-d91eaeff977f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YC3qyTSen1cDHXB3",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1e4-NtUbo2eCgpBp3y2fXjTgZk9QUmeZAwHTdQCMlgWw",
+          "mode": "list",
+          "cachedResultName": "stock",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e4-NtUbo2eCgpBp3y2fXjTgZk9QUmeZAwHTdQCMlgWw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "inventory",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e4-NtUbo2eCgpBp3y2fXjTgZk9QUmeZAwHTdQCMlgWw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number }}",
+            "email_status": "sent"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Compnay name",
+              "displayName": "Compnay name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_status",
+              "displayName": "email_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1056,
+        -16
+      ],
+      "id": "ff3028f1-1b37-4ea6-b670-90c6dea27643",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lfKDSeZtFGWlzTHN",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ai_automation_course",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "809768fc-c10d-491b-bfea-3d910cc754bb",
+      "name": "Webhook",
+      "webhookId": "00d25edc-2d79-42c5-bad4-15a7f56e2448"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "da1f7308-7ae2-47a8-8b83-d580f4e729e7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "321ce4312c827b9d55a6694a9102cca2296748b7ff8e5340adb21d76bcb342ea"
+  },
+  "nodeGroups": [],
+  "id": "RZxn6DbQ86ycZjsv",
+  "tags": []
+}
