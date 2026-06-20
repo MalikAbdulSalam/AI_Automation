@@ -1,0 +1,199 @@
+{
+  "name": "Read_email_send_message",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        80
+      ],
+      "id": "edf0a451-ccbd-4af3-9295-8d92971c5ec6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Meeting",
+        "emailType": "text",
+        "message": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        96
+      ],
+      "id": "506d2130-fb69-4156-a8af-f6e1bb975fa2",
+      "name": "Send a message",
+      "webhookId": "1357086c-5e02-4055-8bce-6dc44d67fb8a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "dEMBXQWJvMKl5WbP",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/data.ods",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        -32
+      ],
+      "id": "f449c225-284c-4236-80d3-71a675ee1ff5",
+      "name": "Read_email"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/mail.txt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        176
+      ],
+      "id": "49141d55-d6c8-47b5-bcc3-513851f7807e",
+      "name": "Read_mail_body"
+    },
+    {
+      "parameters": {
+        "operation": "ods",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        576,
+        -32
+      ],
+      "id": "838ebc06-0a12-4fb5-be36-03f9670fc669",
+      "name": "Extract_email"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        176
+      ],
+      "id": "3a048956-29d4-49cb-9770-7b6ebf33f793",
+      "name": "Extract_mail_body"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        816,
+        96
+      ],
+      "id": "53104a4d-5561-440a-9d9e-fc4c19c0f338",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read_email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Read_mail_body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read_email": {
+      "main": [
+        [
+          {
+            "node": "Extract_email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read_mail_body": {
+      "main": [
+        [
+          {
+            "node": "Extract_mail_body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract_email": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract_mail_body": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "93957cc1-ac05-43c3-98a4-8603f79b2756",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e765180d9b22a1f5f25394fdb4e07a973c0ec02bdf1d39601ac41e58928cf034"
+  },
+  "nodeGroups": [],
+  "id": "1ZmzBzDmE11ILmRO",
+  "tags": []
+}
