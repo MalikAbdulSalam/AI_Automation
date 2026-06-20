@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>n8n Email Automation Lecture</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    background: #f4f6f8;
+    color: #222;
+}
+h1, h2, h3 {
+    color: #2c3e50;
+}
+code, pre {
+    background: #eef;
+    padding: 10px;
+    display: block;
+    border-left: 4px solid #3498db;
+    overflow-x: auto;
+}
+.section {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.highlight {
+    background: #dff9fb;
+    padding: 10px;
+    border-left: 4px solid #00a8ff;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📘 Automated Email System using n8n + ODS + Gmail</h1>
+
+<div class="section">
+<h2>🎯 Objective</h2>
+<p>
+In this lecture, we build an automated system using <b>n8n workflow automation platform</b> that:
+</p>
+<ul>
+<li>Reads data from ODS spreadsheet</li>
+<li>Extracts email and user data</li>
+<li>Reads email message from file</li>
+<li>Merges data</li>
+<li>Sends bulk emails using Gmail</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🧠 1. Introduction to Workflow Automation</h2>
+<p>
+Workflow automation connects tasks so they run automatically without manual effort.
+Each workflow in n8n consists of:
+</p>
+<ul>
+<li>Trigger nodes</li>
+<li>Processing nodes</li>
+<li>Action nodes</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>📂 2. Dataset Structure</h2>
+
+<h3>ODS File (data.ods)</h3>
+<pre>
+Name | Company | Email
+Malik | Inject | malik@gmail.com
+Abdul | AI | abdul@gmail.com
+</pre>
+
+<h3>Email Body File (mail.txt)</h3>
+<pre>
+Hi,
+
+Hope you are doing well.
+Meeting is scheduled on 26-06-2026.
+
+Regards
+Inject AI Solutions
+</pre>
+</div>
+
+<div class="section">
+<h2>⚙️ 3. Workflow Architecture</h2>
+
+<pre>
+Manual Trigger
+      ↓
+Read ODS File
+      ↓
+Extract Email Data
+      ↓
+Read Email Body File
+      ↓
+Merge Data
+      ↓
+Gmail Send Node
+</pre>
+</div>
+
+<div class="section">
+<h2>📥 4. Step-by-Step Implementation</h2>
+
+<h3>Step 1: Manual Trigger</h3>
+<p>Starts workflow manually.</p>
+
+<h3>Step 2: Read ODS File</h3>
+<pre>
+Path:
+/home/node/.n8n-files/data.ods
+</pre>
+
+<h3>Step 3: Extract Data</h3>
+<pre>
+{
+  "Name": "Malik",
+  "Email": "malik@gmail.com"
+}
+</pre>
+
+<h3>Step 4: Read Email Body</h3>
+<pre>
+{
+  "data": "Hi... meeting scheduled..."
+}
+</pre>
+
+<h3>Step 5: Merge Data</h3>
+<p><b>Mode:</b> Combine by Position</p>
+
+<pre>
+{
+  "Name": "Malik",
+  "Email": "malik@gmail.com",
+  "data": "Hi... message..."
+}
+</pre>
+</div>
+
+<div class="section">
+<h2>📧 5. Gmail Node Configuration</h2>
+
+<h3>To Field</h3>
+<pre>
+{{ $json.Email }}
+</pre>
+
+<h3>Message Field</h3>
+<pre>
+{{ $json.data }}
+</pre>
+</div>
+
+<div class="section">
+<h2>⚠️ 6. Common Problems</h2>
+
+<ul>
+<li>Only one email sent → wrong merge mode</li>
+<li>Undefined error → missing field</li>
+<li>Duplicate emails → same data in ODS</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🔁 7. Execution Model</h2>
+<pre>
+1 item = 1 email sent
+6 items = 6 emails sent
+</pre>
+</div>
+
+<div class="section">
+<h2>🚀 8. Final Workflow</h2>
+
+<pre>
+Manual Trigger
+      ↓
+Read ODS
+      ↓
+Extract Email Data
+      ↓
+Read Mail Body
+      ↓
+Merge (Combine by Position)
+      ↓
+Gmail Send
+</pre>
+</div>
+
+<div class="section">
+<h2>💡 9. Real-World Applications</h2>
+<ul>
+<li>Email marketing campaigns</li>
+<li>CRM automation systems</li>
+<li>Student notifications</li>
+<li>HR messaging systems</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🔥 10. Next Level Upgrades</h2>
+<ul>
+<li>AI personalized emails</li>
+<li>Scheduled campaigns</li>
+<li>Google Sheets CRM integration</li>
+<li>Email tracking system</li>
+</ul>
+</div>
+
+</body>
+</html>
