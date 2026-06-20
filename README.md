@@ -64,3 +64,5 @@ AI Automation is not just a technology — it is the future of how industries wi
 ## 🎯 Send E-mail to list of excel file 
 Email is writtent in text file and mail list is in excel file of your local Computer
 
+![send email to list using excel file ](images/send_email_using_local_files.png)
+
