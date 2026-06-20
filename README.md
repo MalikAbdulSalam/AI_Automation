@@ -5,7 +5,7 @@
 
 [Lecture 1](https://malikabdulsalam.github.io/AI_Automation/1-AI_Automation.html)
 
-[Lecture 1](https://malikabdulsalam.github.io/AI_Automation/3-n8n_local_setup.html)
+[Lecture 2 : n8n local setup](https://malikabdulsalam.github.io/AI_Automation/3-n8n_local_setup.html)
 
 # 🤖 Introduction to AI Automation
 
