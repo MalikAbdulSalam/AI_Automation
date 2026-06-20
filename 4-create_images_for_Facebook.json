@@ -1,0 +1,218 @@
+{
+  "name": "create_images_for_Facebook",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a Facebook post about {{$json.topic}}.\n\nAlso create an image prompt for a Facebook marketing image.\n\nReturn ONLY valid JSON.\n\nNo thinking.\nNo explanations.\nNo <think>.\nNo markdown.\n\nTopic: {{$json.topic}}\n\nFormat:\n{\n  \"post\": \"\",\n  \"image_prompt\": \"\"\n}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        64,
+        -48
+      ],
+      "id": "da71bfb4-91c9-496f-9862-52e0baf34825",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        64,
+        128
+      ],
+      "id": "0b337c00-a269-495a-883a-40e3c587a0ec",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "slOhHFpjjtVpi1OD",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "93784f0d-d138-4e95-b1f2-6e956b0b84b7",
+              "name": "topic",
+              "value": "={{ $json.body.topic }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -144,
+        -48
+      ],
+      "id": "22d1462e-0124-4aa4-bd1e-4925e46233e5",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "=https://image.pollinations.ai/prompt/{{ $json.output.image_prompt }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        -48
+      ],
+      "id": "e976f0a1-63b7-4145-80ca-66fb40d5b8d8",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"post\": \"post\",\n  \"image_prompt\": \"image_prompt\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        128
+      ],
+      "id": "00ce1a92-3ac8-4b35-9d79-405562c92d51",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "facebook_post",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -400,
+        -48
+      ],
+      "id": "2e128378-6173-4510-b4f4-0b5c2776441d",
+      "name": "Webhook",
+      "webhookId": "f0aad0fe-c33d-4a9d-ba0a-374d9ebef24d"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        -48
+      ],
+      "id": "644675b1-1aeb-42b2-ad92-bfc02a73c43a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "209dc977-ae4e-4097-bdc0-0082c8b52bf1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e765180d9b22a1f5f25394fdb4e07a973c0ec02bdf1d39601ac41e58928cf034"
+  },
+  "nodeGroups": [],
+  "id": "D3qWJ59mUHUFs3XN",
+  "tags": []
+}
