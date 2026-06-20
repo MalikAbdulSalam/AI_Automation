@@ -54,3 +54,8 @@ AI automation is rapidly growing and will become a core part of every industry. 
 ## 🎯 Conclusion
 
 AI Automation is not just a technology — it is the future of how industries will operate. Learning AI automation opens doors to careers in AI engineering, robotics, data science, and industrial AI systems.
+
+
+## 🎯 Send E-mail to list of excel file 
+Email is writtent in text file and mail list is in excel file of your local Computer
+
