@@ -7,6 +7,9 @@
 
 [Lecture 2 : n8n local setup](https://malikabdulsalam.github.io/AI_Automation/3-n8n_local_setup.html)
 
+[Lecture 3 : send email to list of items using local files ](https://malikabdulsalam.github.io/AI_Automation/3-n8n_email_automation_on_local_data.html)
+
+
 # 🤖 Introduction to AI Automation
 
 Artificial Intelligence (AI) Automation is the use of AI technologies to perform tasks and processes automatically with minimal human intervention. It combines AI models, workflows, and software systems to create intelligent systems that can make decisions, process data, and execute actions on their own.
