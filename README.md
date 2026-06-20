@@ -66,3 +66,8 @@ Email is writtent in text file and mail list is in excel file of your local Comp
 
 ![send email to list using excel file ](images/send_email_using_local_files.png)
 
+## 🎯 Content creation for facebook and uploading workflow 
+workflow to creat facebook content for marketing and auto upload on daily basis
+
+working on this ....
+
