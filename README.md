@@ -10,7 +10,7 @@
 [Lecture 3 : send email to list of items using local files ](https://malikabdulsalam.github.io/AI_Automation/3-n8n_email_automation_on_local_data.html)
 
 
-# 🤖 Introduction to AI Automation
+# Introduction to AI Automation
 
 Artificial Intelligence (AI) Automation is the use of AI technologies to perform tasks and processes automatically with minimal human intervention. It combines AI models, workflows, and software systems to create intelligent systems that can make decisions, process data, and execute actions on their own.
 
@@ -18,7 +18,7 @@ In simple words, AI automation allows machines and software to think, analyze, a
 
 ---
 
-## 🚀 Why AI Automation is Important
+## Why AI Automation is Important
 
 - Saves time by reducing manual work  
 - Increases efficiency and productivity  
@@ -28,7 +28,7 @@ In simple words, AI automation allows machines and software to think, analyze, a
 
 ---
 
-## 🧠 Where AI Automation is Used
+## Where AI Automation is Used
 
 - Industrial automation (factories, robotics)  
 - Chatbots and virtual assistants  
@@ -38,7 +38,7 @@ In simple words, AI automation allows machines and software to think, analyze, a
 
 ---
 
-## ⚙️ Example of AI Automation
+## Example of AI Automation
 
 A smart factory can automatically:
 - Detect defective products using computer vision  
@@ -50,19 +50,19 @@ All without human involvement in real-time decisions.
 
 ---
 
-## 🌍 Future of AI Automation
+## Future of AI Automation
 
 AI automation is rapidly growing and will become a core part of every industry. From healthcare to manufacturing and business operations, AI will handle most repetitive and intelligent decision-making tasks in the future.
 
 ---
 
-## 🎯 Conclusion
+## Conclusion
 
 AI Automation is not just a technology — it is the future of how industries will operate. Learning AI automation opens doors to careers in AI engineering, robotics, data science, and industrial AI systems.
 
-# 🚀 Local Setup of n8n (Complete Guide)
+# Local Setup of n8n (Complete Guide)
 
-## 🎯 Objective
+## Objective
 
 In this guide, we will install and run n8n workflow automation platform locally using Docker. After this setup, you will be able to:
 
@@ -72,7 +72,7 @@ In this guide, we will install and run n8n workflow automation platform locally 
 
 ---
 
-## 🧠 1. What is n8n?
+## 1. What is n8n?
 
 n8n is a powerful workflow automation tool that allows you to connect apps, APIs, and services visually without heavy coding.
 
@@ -82,18 +82,18 @@ n8n is a powerful workflow automation tool that allows you to connect apps, APIs
 
 ---
 
-## ⚙️ 2. Requirements
+## 2. Requirements
 
 - Linux / Windows / Mac
 - Docker installed
 - At least 2GB RAM
 - Basic terminal knowledge
 
-> **⚠️ Docker is required for easiest installation.**
+> **Docker is required for easiest installation.**
 
 ---
 
-## 🐳 3. Install Docker (If not installed)
+## 3. Install Docker (If not installed)
 
 ```bash
 sudo apt update
@@ -110,7 +110,7 @@ docker --version
 
 ---
 
-## 📦 4. Create Required Folders
+## 4. Create Required Folders
 
 ```bash
 mkdir -p /home/your-user/n8n_data
@@ -125,7 +125,7 @@ sudo chown -R 1000:1000 /home/your-user/n8n_data
 
 ---
 
-## 🚀 5. Run n8n Using Docker
+## 5. Run n8n Using Docker
 
 ```bash
 docker run -d \
@@ -141,7 +141,7 @@ docker run -d \
 
 ---
 
-## 🌐 6. Open n8n in Browser
+## 6. Open n8n in Browser
 
 After running container, open:
 
@@ -153,7 +153,7 @@ You will see the n8n editor interface.
 
 ---
 
-## 📂 7. File Access in n8n
+## 7. File Access in n8n
 
 n8n does **NOT** allow random file access for security.
 
@@ -177,7 +177,7 @@ Then inside n8n use:
 
 ---
 
-## ⚠️ 8. Common Issues
+## 8. Common Issues
 
 | Issue | Solution |
 |-------|----------|
@@ -187,7 +187,7 @@ Then inside n8n use:
 
 ---
 
-## 🔍 9. Check if n8n is Running
+## 9. Check if n8n is Running
 
 ```bash
 docker ps
@@ -201,7 +201,7 @@ docker logs n8n-main
 
 ---
 
-## 🔁 10. Restart n8n
+## 10. Restart n8n
 
 ```bash
 docker start n8n-main
@@ -215,7 +215,7 @@ docker stop n8n-main
 
 ---
 
-## 💡 11. Final Architecture
+## 11. Final Architecture
 
 ```
 Local Folder (/n8n_files)
@@ -232,7 +232,7 @@ APIs / Gmail / Files / AI
 ---
 
 
-## 📝 Quick Commands Reference
+## Quick Commands Reference
 
 | Command | Description |
 |---------|-------------|
@@ -249,7 +249,7 @@ APIs / Gmail / Files / AI
 =======================================================================================
 ---
 
-## 🚀 Starting a Workflow (Triggers)
+## Starting a Workflow (Triggers)
 
 | Node | What it Does |
 |------|--------------|
@@ -261,7 +261,7 @@ APIs / Gmail / Files / AI
 
 ---
 
-## 🔄 Processing & Managing Data
+## Processing & Managing Data
 
 | Node | What it Does |
 |------|--------------|
@@ -283,7 +283,7 @@ APIs / Gmail / Files / AI
 
 ---
 
-## 🌍 Connecting to the World (Integrations & APIs)
+## Connecting to the World (Integrations & APIs)
 
 | Node | What it Does |
 |------|--------------|
@@ -302,7 +302,7 @@ APIs / Gmail / Files / AI
 
 ---
 
-## 🧠 AI & Advanced Capabilities
+## AI & Advanced Capabilities
 
 | Node | What it Does |
 |------|--------------|
@@ -316,7 +316,7 @@ APIs / Gmail / Files / AI
 
 ---
 
-## 🧩 Popular Community Nodes (Top Downloads)
+## Popular Community Nodes (Top Downloads)
 
 | Node | Description | Monthly Downloads |
 |------|-------------|-------------------|
@@ -335,14 +335,14 @@ APIs / Gmail / Files / AI
 ---
 # Projects
 
-## 🎯 Send E-mail to list of excel file 
+## Send E-mail to list of excel file 
 Email is writtent in text file and mail list is in excel file of your local Computer
 
 ![send email to list using excel file ](images/send_email_using_local_files.png)
 
 
 
-## 🎯 Content creation for facebook and uploading workflow 
+## Content creation for facebook and uploading workflow 
 workflow to creat facebook content for marketing and auto upload on daily basis
 
 working on this ....
