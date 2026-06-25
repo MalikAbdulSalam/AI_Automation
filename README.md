@@ -60,20 +60,212 @@ AI automation is rapidly growing and will become a core part of every industry. 
 
 AI Automation is not just a technology — it is the future of how industries will operate. Learning AI automation opens doors to careers in AI engineering, robotics, data science, and industrial AI systems.
 
-# ⚡ n8n Node Reference
+# 🚀 Local Setup of n8n (Complete Guide)
 
-A comprehensive reference guide for n8n workflow nodes, integrations, and community favourites.
+## 🎯 Objective
+
+In this guide, we will install and run n8n workflow automation platform locally using Docker. After this setup, you will be able to:
+
+- Run n8n on your own computer
+- Create workflows locally
+- Connect files, APIs, and automation tools
 
 ---
 
-## Table of Contents
-- [Starting a Workflow (Triggers)](#starting-a-workflow-triggers)
-- [Processing & Managing Data](#processing--managing-data)
-- [Connecting to the World (Integrations)](#connecting-to-the-world-integrations--apis)
-- [AI & Advanced Capabilities](#ai--advanced-capabilities)
-- [Popular Community Nodes](#popular-community-nodes-top-downloads)
-- [Quick Reference by Category](#quick-reference-by-category)
+## 🧠 1. What is n8n?
 
+n8n is a powerful workflow automation tool that allows you to connect apps, APIs, and services visually without heavy coding.
+
+- Open-source automation tool
+- Self-hosted (run locally or on server)
+- Supports 400+ integrations
+
+---
+
+## ⚙️ 2. Requirements
+
+- Linux / Windows / Mac
+- Docker installed
+- At least 2GB RAM
+- Basic terminal knowledge
+
+> **⚠️ Docker is required for easiest installation.**
+
+---
+
+## 🐳 3. Install Docker (If not installed)
+
+```bash
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+**Check version:**
+
+```bash
+docker --version
+```
+
+---
+
+## 📦 4. Create Required Folders
+
+```bash
+mkdir -p /home/your-user/n8n_data
+mkdir -p /home/your-user/n8n_files
+```
+
+**Fix permissions:**
+
+```bash
+sudo chown -R 1000:1000 /home/your-user/n8n_data
+```
+
+---
+
+## 🚀 5. Run n8n Using Docker
+
+```bash
+docker run -d \
+  --name n8n-main \
+  --restart always \
+  -p 5678:5678 \
+  -e N8N_SECURE_FILE_ACCESS_MODE=false \
+  -e N8N_LOCAL_FILES_BASE_DIR=/files \
+  -v /home/your-user/n8n_files:/files \
+  -v /home/your-user/n8n_data:/home/node/.n8n \
+  n8nio/n8n
+```
+
+---
+
+## 🌐 6. Open n8n in Browser
+
+After running container, open:
+
+```
+http://localhost:5678
+```
+
+You will see the n8n editor interface.
+
+---
+
+## 📂 7. File Access in n8n
+
+n8n does **NOT** allow random file access for security.
+
+**Allowed folder is:**
+
+```
+/home/node/.n8n-files
+```
+
+**To use your own files:**
+
+```bash
+docker run -v /your/path:/files
+```
+
+Then inside n8n use:
+
+```
+/files/yourfile.ods
+```
+
+---
+
+## ⚠️ 8. Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| ❌ Permission denied | Fix with `chown 1000:1000` |
+| ❌ File not found | Wrong volume mount path |
+| ❌ Container restart loop | Check logs with `docker logs` |
+
+---
+
+## 🔍 9. Check if n8n is Running
+
+```bash
+docker ps
+```
+
+**Check logs:**
+
+```bash
+docker logs n8n-main
+```
+
+---
+
+## 🔁 10. Restart n8n
+
+```bash
+docker start n8n-main
+```
+
+**Stop:**
+
+```bash
+docker stop n8n-main
+```
+
+---
+
+## 💡 11. Final Architecture
+
+```
+Local Folder (/n8n_files)
+        ↓
+Docker Volume Mount
+        ↓
+n8n Container
+        ↓
+Workflow Automation
+        ↓
+APIs / Gmail / Files / AI
+```
+
+---
+
+## 🚀 12. What You Can Build Next
+
+- Email automation system
+- AI chatbot workflows
+- Data pipelines
+- CRM systems
+- API automation tools
+
+---
+
+## 📚 Additional Resources
+
+- [n8n Official Documentation](https://docs.n8n.io/)
+- [n8n Docker Hub](https://hub.docker.com/r/n8nio/n8n)
+- [n8n Community Forums](https://community.n8n.io/)
+
+---
+
+## 📝 Quick Commands Reference
+
+| Command | Description |
+|---------|-------------|
+| `docker run -d --name n8n-main ...` | Run n8n container in background |
+| `docker ps` | List running containers |
+| `docker logs n8n-main` | View n8n logs |
+| `docker stop n8n-main` | Stop n8n container |
+| `docker start n8n-main` | Start n8n container |
+| `docker rm n8n-main` | Remove n8n container |
+
+---
+
+*Happy automating with n8n! 🎉*
+
+---
+=======================================================================================
 ---
 
 ## 🚀 Starting a Workflow (Triggers)
@@ -158,31 +350,9 @@ A comprehensive reference guide for n8n workflow nodes, integrations, and commun
 
 ---
 
-## 📋 Quick Reference by Category
-
-| Category | Nodes |
-|----------|-------|
-| **🔌 Core Integrations** | Slack · Gmail · Notion · Airtable · PostgreSQL · MongoDB · HTTP Request |
-| **🧠 AI** | OpenAI · Claude · Gemini · Vector Store · AI Agent · AI Tools |
-| **⚡ Utility** | Code · Crypto · Date/Time · HTML Extract · Execute Command · Filter · Merge |
-| **📊 Data** | Split Out · Aggregate · Edit Fields · Spreadsheet File · Split In Batches |
-| **🔀 Logic** | IF · Switch · Loop · Filter · Merge |
-| **📨 Triggers** | Schedule · Webhook · Event · Email (IMAP) · RSS |
-
+=====================================================================================
 ---
-
-## 📝 Additional Notes
-
-- **Code Node** supports both JavaScript and Python for maximum flexibility
-- **HTTP Request** is the go-to node for any API without a dedicated integration
-- **Subworkflows** help keep complex automations organized and reusable
-- **Vector Store** combined with AI Agents enables RAG (Retrieval-Augmented Generation) workflows
-- Community nodes can be installed via the n8n community nodes feature
-
----
-
-*Compiled from official n8n documentation and community statistics*
-
+# Projects
 
 ## 🎯 Send E-mail to list of excel file 
 Email is writtent in text file and mail list is in excel file of your local Computer
