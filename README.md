@@ -231,23 +231,6 @@ APIs / Gmail / Files / AI
 
 ---
 
-## 🚀 12. What You Can Build Next
-
-- Email automation system
-- AI chatbot workflows
-- Data pipelines
-- CRM systems
-- API automation tools
-
----
-
-## 📚 Additional Resources
-
-- [n8n Official Documentation](https://docs.n8n.io/)
-- [n8n Docker Hub](https://hub.docker.com/r/n8nio/n8n)
-- [n8n Community Forums](https://community.n8n.io/)
-
----
 
 ## 📝 Quick Commands Reference
 
@@ -261,8 +244,6 @@ APIs / Gmail / Files / AI
 | `docker rm n8n-main` | Remove n8n container |
 
 ---
-
-*Happy automating with n8n! 🎉*
 
 ---
 =======================================================================================
