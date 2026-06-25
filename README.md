@@ -72,7 +72,7 @@ In this guide, we will install and run n8n workflow automation platform locally 
 
 ---
 
-## 1. What is n8n?
+## What is n8n and where we can run it?
 
 n8n is a powerful workflow automation tool that allows you to connect apps, APIs, and services visually without heavy coding.
 
@@ -82,7 +82,7 @@ n8n is a powerful workflow automation tool that allows you to connect apps, APIs
 
 ---
 
-## 2. Requirements
+## Requirements
 
 - Linux / Windows / Mac
 - Docker installed
@@ -93,7 +93,7 @@ n8n is a powerful workflow automation tool that allows you to connect apps, APIs
 
 ---
 
-## 3. Install Docker (If not installed)
+## step 1: Install Docker (If not installed)
 
 ```bash
 sudo apt update
@@ -110,7 +110,7 @@ docker --version
 
 ---
 
-## 4. Create Required Folders
+## Step 2: Create Required Folders
 
 ```bash
 mkdir -p /home/your-user/n8n_data
@@ -125,7 +125,7 @@ sudo chown -R 1000:1000 /home/your-user/n8n_data
 
 ---
 
-## 5. Run n8n Using Docker
+## Step 3: Run n8n Using Docker
 
 ```bash
 docker run -d \
@@ -141,7 +141,7 @@ docker run -d \
 
 ---
 
-## 6. Open n8n in Browser
+## Step 4:Open n8n in Browser
 
 After running container, open:
 
@@ -153,7 +153,7 @@ You will see the n8n editor interface.
 
 ---
 
-## 7. File Access in n8n
+## Step 5: File Access in n8n
 
 n8n does **NOT** allow random file access for security.
 
