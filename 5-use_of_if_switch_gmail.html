@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Workflow Automation - Complete Course Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8f9fa;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 40px 50px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.3rem;
+            border-bottom: 4px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 5px solid #2563eb;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #334155;
+            margin-top: 22px;
+            margin-bottom: 6px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            color: #1e293b;
+        }
+
+        ul, ol {
+            margin: 12px 0 18px 22px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight-box {
+            background: #f1f5f9;
+            border-left: 5px solid #2563eb;
+            padding: 16px 22px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-box {
+            background: #fef9e7;
+            border-left: 5px solid #f59e0b;
+            padding: 16px 22px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: #fee2e2;
+            border-left: 5px solid #dc2626;
+            padding: 16px 22px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 16px 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 12px 0;
+            white-space: pre-wrap;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: #e2e8f0;
+            font-weight: 600;
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .node-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 4px;
+            background: #f8fafc;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin: 16px 0;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .node-flow span {
+            background: #e2e8f0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .node-flow .arrow {
+            background: transparent;
+            color: #64748b;
+            font-weight: normal;
+            padding: 0 2px;
+        }
+
+        .scenario-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+
+        .scenario-card h3 {
+            margin-top: 0;
+            color: #0f172a;
+        }
+
+        .json-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px dashed #e2e8f0;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .node-flow {
+                font-size: 0.8rem;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>n8n Workflow Automation</h1>
+    <p class="subtitle">Complete Course Guide — From Triggers to AI-Powered Workflows</p>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 1: INTRODUCTION -->
+    <!-- ============================================================ -->
+
+    <h2>Part 1: Foundation & Core Concepts</h2>
+
+    <p><strong>What is n8n?</strong> An open-source, low-code platform for automating tasks by connecting apps, services, and APIs.</p>
+
+    <h3>Key Concepts</h3>
+    <ul>
+        <li><strong>Workflow</strong> – The entire automation pipeline.</li>
+        <li><strong>Node</strong> – A single step in the workflow (trigger, action, transformation).</li>
+        <li><strong>Trigger</strong> – The event that starts the workflow.</li>
+        <li><strong>Data Flow</strong> – How data moves from one node to the next via JSON.</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>Teaching Tip:</strong> Start with a simple two-node workflow (Trigger → Node) so students see immediate results. Then gradually add complexity.
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 2: TRIGGERS -->
+    <!-- ============================================================ -->
+
+    <h2>⚡ Triggers – How Workflows Start</h2>
+
+    <p>Every workflow begins with a trigger. Here are the three most common types:</p>
+
+    <h3>1. Webhook Trigger</h3>
+    <p><strong>Analogy:</strong> A doorbell. An external event rings the bell, and the workflow answers.</p>
+    <ul>
+        <li>Provides a unique URL that listens for HTTP requests (GET, POST, etc.).</li>
+        <li>Ideal for real-time integrations (e.g., "When I receive a payment, update my CRM").</li>
+    </ul>
+
+    <h3>2. Schedule Trigger</h3>
+    <p><strong>Analogy:</strong> An alarm clock. The workflow runs automatically at a set time.</p>
+    <ul>
+        <li>Runs on a fixed interval (every 5 minutes, every day at 9 AM, etc.).</li>
+        <li>Perfect for recurring tasks like daily report generation.</li>
+    </ul>
+
+    <h3>3. Form Trigger</h3>
+    <p><strong>Analogy:</strong> A suggestion box. A person fills out a form, and the workflow starts.</p>
+    <ul>
+        <li>Generates a hosted form with custom fields (text, dropdowns, file uploads).</li>
+        <li>Great for collecting structured data from users.</li>
+    </ul>
+
+    <div class="tip-box">
+        <strong>Pro Tip:</strong> When testing, start with a <strong>Manual Trigger</strong> to quickly run the workflow, then swap it with your real trigger once the logic is solid.
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 3: LOGIC NODES (IF & SWITCH) -->
+    <!-- ============================================================ -->
+
+    <h2>Conditional Logic – If & Switch Nodes</h2>
+
+    <p>These nodes make your workflows "smart" by enabling decisions and routing.</p>
+
+    <h3>The <code>If</code> Node – The "Yes/No" Decision Maker</h3>
+    <ul>
+        <li>Evaluates a condition and splits data into two paths: <strong>true</strong> and <strong>false</strong>.</li>
+        <li>Configuration: <code>Value1</code> [Operation] <code>Value2</code>.</li>
+        <li><strong>Example:</strong> If <code>orderStatus</code> equals <code>"processing"</code> → send to processing branch; else → send to completed branch.</li>
+    </ul>
+
+    <h3>The <code>Switch</code> Node – The "Multi-Branch Router"</h3>
+    <ul>
+        <li>Routes data to one of many outputs (3+ branches).</li>
+        <li>Each rule defines a condition; unmatched items go to the <strong>Fallback</strong> output.</li>
+        <li><strong>Example:</strong> Route customer support tickets by issue type: billing, technical, general, fallback.</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>Rule of Thumb:</strong> Use <code>If</code> for simple true/false checks. Use <code>Switch</code> when you have 3+ distinct routes.
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 4: EDIT FIELDS & DATA TRANSFORMATION -->
+    <!-- ============================================================ -->
+
+    <h2>✏️ Data Transformation – The Edit Fields Node</h2>
+
+    <p>After routing data, you often need to reshape it for the next step. The <code>Edit Fields</code> node is your data studio.</p>
+
+    <h3>Key Features</h3>
+    <ul>
+        <li><strong>Manual Mapping:</strong> Drag and drop fields from the Input panel to create or overwrite fields.</li>
+        <li><strong>Expressions:</strong> Use <code>{{ $json.fieldName }}</code> to pull live data from previous nodes.</li>
+        <li><strong>Keep Only Set Fields:</strong> Discard all original data and only output the fields you define — great for privacy and performance.</li>
+    </ul>
+
+    <h3>Example: Cleaning Data</h3>
+    <p>Input: <code>{ "firstName": "John", "lastName": "Doe" }</code></p>
+    <p>Using an expression: <code>{{ $json.firstName + " " + $json.lastName }}</code> → output: <code>{ "fullName": "John Doe" }</code></p>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 5: SCENARIOS -->
+    <!-- ============================================================ -->
+
+    <h2>Real-World Scenarios</h2>
+
+    <!-- SCENARIO 1 -->
+    <div class="scenario-card">
+        <h3>Scenario 1: Customer Support Ticket Triage</h3>
+        <p><strong>Goal:</strong> Automatically categorize and route support tickets, then format them for the helpdesk system.</p>
+
+        <div class="node-flow">
+            <span>Form Trigger</span>
+            <span class="arrow">→</span>
+            <span>If (VIP Check)</span>
+            <span class="arrow">→</span>
+            <span>Switch (Issue Type)</span>
+            <span class="arrow">→</span>
+            <span>Edit Fields (Clean Data)</span>
+            <span class="arrow">→</span>
+            <span>HTTP Request (Send to Helpdesk)</span>
+        </div>
+
+        <h4>Step 1: Trigger Data</h4>
+        <div class="json-example">
+{
+  "customerName": "John Doe",
+  "email": "john@email.com",
+  "issueType": "billing",
+  "issueDescription": "I was charged twice",
+  "isVIP": "true"
+}
+        </div>
+
+        <h4>Step 2: If Node – Priority Check</h4>
+        <ul>
+            <li><strong>Rule:</strong> If <code>isVIP</code> equals <code>"true"</code> → <strong>High Priority</strong></li>
+            <li>Else → Normal Priority</li>
+            <li>Output adds a <code>priority</code> field.</li>
+        </ul>
+
+        <h4>Step 3: Switch Node – Route by Issue</h4>
+        <ul>
+            <li><strong>Rule 1:</strong> If <code>issueType</code> = "billing" → Billing Team</li>
+            <li><strong>Rule 2:</strong> If <code>issueType</code> = "technical" → Tech Support</li>
+            <li><strong>Rule 3:</strong> If <code>issueType</code> = "general" → General Support</li>
+            <li><strong>Fallback:</strong> Unassigned Queue (manual review)</li>
+        </ul>
+
+        <h4>Step 4: Edit Fields – Clean for Helpdesk</h4>
+        <div class="json-example">
+{
+  "ticketTitle": "billing",
+  "ticketDescription": "Customer: John Doe\nIssue: I was charged twice\nPriority: High",
+  "customerEmail": "john@email.com",
+  "assignedTo": "support@billing.com",
+  "timestamp": "2026-07-01T10:30:00.000Z"
+}
+        </div>
+    </div>
+
+    <!-- SCENARIO 2 -->
+    <div class="scenario-card">
+        <h3>Scenario 2: E-commerce Order Fulfillment</h3>
+        <p><strong>Goal:</strong> Process incoming orders, check for express eligibility, route to the correct fulfillment center, and format data for the warehouse.</p>
+
+        <div class="node-flow">
+            <span>Webhook Trigger</span>
+            <span class="arrow">→</span>
+            <span>If (Express Check)</span>
+            <span class="arrow">→</span>
+            <span>Switch (Region)</span>
+            <span class="arrow">→</span>
+            <span>Edit Fields (Warehouse Format)</span>
+            <span class="arrow">→</span>
+            <span>HTTP Request (Send to Fulfillment)</span>
+        </div>
+
+        <h4>Step 1: Trigger Data</h4>
+        <div class="json-example">
+{
+  "orderId": "ORD-12345",
+  "customerName": "Maria Garcia",
+  "totalAmount": 1250,
+  "shippingAddress": { "country": "US", "city": "New York" },
+  "shippingMethod": "standard"
+}
+        </div>
+
+        <h4>Step 2: If Node – Express Eligibility</h4>
+        <ul>
+            <li><strong>Rule 1:</strong> If <code>totalAmount</code> &gt; 1000 → Express (FREE)</li>
+            <li><strong>Rule 2:</strong> If <code>shippingMethod</code> = "express" → Express (PAID)</li>
+            <li>Else → Standard Shipping</li>
+        </ul>
+
+        <h4>Step 3: Switch Node – Fulfillment Center</h4>
+        <ul>
+            <li><strong>Rule 1:</strong> If country = "US" → US Center</li>
+            <li><strong>Rule 2:</strong> If country in ["UK","DE","FR"] → Europe Center</li>
+            <li><strong>Rule 3:</strong> If country in ["JP","CN","IN"] → Asia Center</li>
+            <li><strong>Fallback:</strong> International Distribution</li>
+        </ul>
+
+        <h4>Step 4: Edit Fields – Warehouse Format</h4>
+        <div class="json-example">
+{
+  "order_id": "ORD-12345",
+  "customer_name": "Maria Garcia",
+  "shipping_country": "US",
+  "ship_speed": "Express",
+  "total_value": 1250,
+  "processing_deadline": "2026-07-02T10:30:00.000Z"
+}
+        </div>
+    </div>
+
+    <!-- SCENARIO 3 -->
+    <div class="scenario-card">
+        <h3>Scenario 3: HR Employee Onboarding</h3>
+        <p><strong>Goal:</strong> Process new hire forms, check for security clearance requirements, route to the correct department, and send a personalized welcome email.</p>
+
+        <div class="node-flow">
+            <span>Form Trigger</span>
+            <span class="arrow">→</span>
+            <span>If (Clearance Check)</span>
+            <span class="arrow">→</span>
+            <span>Switch (Department)</span>
+            <span class="arrow">→</span>
+            <span>Edit Fields (HR Format)</span>
+            <span class="arrow">→</span>
+            <span>Email Node (Send Welcome)</span>
+        </div>
+
+        <h4>Step 1: Trigger Data</h4>
+        <div class="json-example">
+{
+  "fullName": "James Wilson",
+  "email": "jwilson@company.com",
+  "department": "engineering",
+  "position": "Senior Software Engineer",
+  "role": "developer",
+  "accessLevel": "high",
+  "reportingManager": "Sarah Lee"
+}
+        </div>
+
+        <h4>Step 2: If Node – Security Clearance</h4>
+        <ul>
+            <li><strong>Rule:</strong> If <code>role</code> = "admin" OR <code>accessLevel</code> = "high" → Needs Clearance</li>
+            <li>Else → Standard Onboarding</li>
+        </ul>
+
+        <h4>Step 3: Switch Node – Department</h4>
+        <ul>
+            <li><strong>Rule 1:</strong> If <code>department</code> = "engineering" → Engineering Team</li>
+            <li><strong>Rule 2:</strong> If <code>department</code> = "sales" → Sales Team</li>
+            <li><strong>Rule 3:</strong> If <code>department</code> = "hr" → HR Team</li>
+            <li><strong>Fallback:</strong> General Onboarding</li>
+        </ul>
+
+        <h4>Step 4: Edit Fields – HR Format</h4>
+        <div class="json-example">
+{
+  "employee_name": "James Wilson",
+  "employee_email": "jwilson@company.com",
+  "department": "engineering",
+  "position_title": "Senior Software Engineer",
+  "clearance_required": true,
+  "onboarding_package": "Welcome James Wilson! Your start date is 2026-08-01..."
+}
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 6: VISUALIZING SWITCH OUTPUT -->
+    <!-- ============================================================ -->
+
+    <h2>How to See Which Switch Branch Executed</h2>
+
+    <h3>1. Visual Inspection</h3>
+    <ul>
+        <li>After running the workflow, <strong>click on the Switch node</strong>.</li>
+        <li>In the output panel, you'll see tabs: <strong>Output 0</strong>, <strong>Output 1</strong>, <strong>Output 2</strong>, etc.</li>
+        <li>The branch that contains data is the one that executed.</li>
+    </ul>
+
+    <div class="tip-box">
+        <strong>UI Note:</strong> Sometimes the Schema tab shows "No fields." Switch to <strong>Table</strong> or <strong>JSON</strong> view to see your data. This is a known display quirk.
+    </div>
+
+    <h3>2. Referencing a Specific Branch Later</h3>
+    <p>If you need to use data from a specific branch in a later node, use the expression:</p>
+    <div class="code-block">$("SwitchNodeName").all(branchIndex)</div>
+    <ul>
+        <li><code>branchIndex</code> starts at 0 (for Output 0).</li>
+        <li><strong>Example:</strong> <code>$("MyRouter").all(1)</code> references data from Output 1.</li>
+    </ul>
+
+    <div class="warning-box">
+        <strong>Common Error:</strong> "No execution data available" — This happens when you try to reference a branch that wasn't executed for that item. Always verify your logic path.
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 7: WHAT TO DO AFTER SWITCH -->
+    <!-- ============================================================ -->
+
+    <h2>What Comes After the Switch Node?</h2>
+
+    <p>Once your <code>Switch</code> node has routed the data, you need to <strong>take action</strong> on each branch.</p>
+
+    <h3>Option 1: HTTP Request Node</h3>
+    <p>Send data to an external API — create a ticket in Zendesk, update a CRM record, post to Slack, etc.</p>
+
+    <h3>Option 2: Email Node</h3>
+    <p>Send a notification email to a team or user with the relevant data.</p>
+
+    <h3>Option 3: Merge Node (Next Topic)</h3>
+    <p>Combine data from multiple branches back into a single stream before sending it to a final destination.</p>
+
+    <div class="highlight-box">
+        <strong>Pro Tip:</strong> Always connect your <strong>Fallback</strong> output to an alert or logging node. This ensures unexpected data doesn't get lost and you're notified to update your rules.
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 8: STUDENT CHALLENGE -->
+    <!-- ============================================================ -->
+
+    <h2>Student Challenge</h2>
+
+    <p><strong>Build a "Product Review Moderation" Workflow</strong> that:</p>
+    <ol>
+        <li><strong>Starts with a Form Trigger</strong> collecting: product name, rating (1-5), review text, and user email.</li>
+        <li><strong>Uses an <code>If</code> node</strong> to flag reviews with rating &lt; 3 as "Needs Manager Review".</li>
+        <li><strong>Uses a <code>Switch</code> node</strong> to route reviews by product category: "electronics", "clothing", "books", and a fallback.</li>
+        <li><strong>Uses an <code>Edit Fields</code> node</strong> to format the output with:
+            <ul>
+                <li><code>review_summary</code> combining product name and rating</li>
+                <li><code>moderation_status</code> based on the <code>If</code> node</li>
+                <li>Only keep: <code>product_name</code>, <code>review_summary</code>, <code>moderation_status</code>, <code>user_email</code></li>
+            </ul>
+        </li>
+    </ol>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 9: QUICK REFERENCE -->
+    <!-- ============================================================ -->
+
+    <h2>Quick Reference: When to Use Each Node</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Node</th>
+                <th>Best Used For</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>If</strong></td>
+                <td>Simple Yes/No decisions</td>
+                <td>"Is the customer VIP?"</td>
+            </tr>
+            <tr>
+                <td><strong>Switch</strong></td>
+                <td>3+ distinct routing paths</td>
+                <td>"Route to US, EU, or Asia center"</td>
+            </tr>
+            <tr>
+                <td><strong>Edit Fields</strong></td>
+                <td>Data cleanup, formatting, renaming</td>
+                <td>"Extract only name and email"</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 10: RESOURCES -->
+    <!-- ============================================================ -->
+
+    <h2>Recommended Resources</h2>
+
+    <ul>
+        <li><strong>Official n8n Level 1 Course</strong> – Free, structured introduction.</li>
+        <li><strong>Interactive Tutorial Workflows</strong> – Pre-built workflows that teach by doing.</li>
+        <li><strong>n8n Documentation</strong> – Comprehensive API reference and guides.</li>
+        <li><strong>n8n Community Forum</strong> – Get help and share ideas with other users.</li>
+    </ul>
+
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e2e8f0; text-align: center; color: #64748b; font-size: 0.9rem;">
+        
+    </div>
+
+</div>
+
+</body>
+</html>

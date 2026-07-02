@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* All your CSS here - keep it the same */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .form-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 40px;
+            max-width: 580px;
+            width: 100%;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+        .header { text-align: center; margin-bottom: 36px; }
+        .header .icon {
+            font-size: 44px;
+            color: #6c63ff;
+            background: rgba(108, 99, 255, 0.15);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .header h1 { color: #ffffff; font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+        .header p { color: rgba(255, 255, 255, 0.6); font-size: 15px; }
+        .form-group { margin-bottom: 22px; }
+        .form-group label { display: block; color: rgba(255, 255, 255, 0.85); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+        .form-group label .required { color: #ff6b6b; }
+        .form-group .input-wrapper { position: relative; }
+        .form-group .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 16px;
+        }
+        .form-group .input-wrapper i.fa-comment { top: 18px; transform: none; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px 16px 14px 46px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        .form-group textarea { padding-left: 46px; resize: vertical; min-height: 110px; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #6c63ff;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
+        }
+        .form-group select { appearance: none; cursor: pointer; color: rgba(255, 255, 255, 0.85); }
+        .form-group select option { background: #1a1a2e; color: #fff; }
+        .vip-toggle {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0 4px;
+            cursor: pointer;
+        }
+        .vip-toggle input[type="checkbox"] { display: none; }
+        .vip-toggle .toggle-track {
+            width: 50px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            position: relative;
+            transition: all 0.35s ease;
+            flex-shrink: 0;
+        }
+        .vip-toggle .toggle-track .toggle-thumb {
+            width: 22px;
+            height: 22px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .vip-toggle input:checked + .toggle-track { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .vip-toggle input:checked + .toggle-track .toggle-thumb { left: 25px; }
+        .vip-toggle .vip-label { color: rgba(255, 255, 255, 0.85); font-weight: 600; font-size: 15px; }
+        .vip-toggle .vip-label i { color: #f5576c; margin-right: 6px; }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #6c63ff, #5a52d5);
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(108, 99, 255, 0.35); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+        .submit-btn .spinner {
+            display: none;
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .submit-btn.loading .spinner { display: inline-block; }
+        .submit-btn.loading .btn-text { display: none; }
+        .submit-btn.loading i { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 28px;
+            border-radius: 14px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 999;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            max-width: 420px;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: linear-gradient(135deg, #00b894, #00a381); }
+        .toast.error { background: linear-gradient(135deg, #ff6b6b, #e74c3c); }
+        .toast i { font-size: 22px; }
+        .status-badge { margin-top: 16px; text-align: center; font-size: 13px; color: rgba(255, 255, 255, 0.3); }
+        .status-badge .connected { color: #00b894; }
+        .status-badge .disconnected { color: #ff6b6b; }
+        @media (max-width: 600px) { .form-card { padding: 32px 20px; } }
+    </style>
+</head>
+<body>
+
+    <div class="form-card">
+        <div class="header">
+            <div class="icon"><i class="fas fa-headset"></i></div>
+            <h1>Support Center</h1>
+            <p>We're here to help — tell us what's going on</p>
+        </div>
+
+        <form id="supportForm" novalidate>
+            <div class="form-group">
+                <label for="name">Full Name <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="issueType">Issue Type <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-tag"></i>
+                    <select id="issueType" name="issue type" required>
+                        <option value="">Select an issue type</option>
+                        <option value="login">🔐 Login</option>
+                        <option value="payment">💳 Payment</option>
+                        <option value="technical">🔧 Technical</option>
+                        <option value="account">👤 Account</option>
+                        <option value="feature">✨ Feature Request</option>
+                        <option value="bug">🐛 Bug Report</option>
+                        <option value="other">📌 Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="issueDescription">Issue Description <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-comment"></i>
+                    <textarea id="issueDescription" name="issue discription" placeholder="Describe your issue in detail..." required></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="vip-toggle">
+                    <input type="checkbox" id="isVip" name="is vip" />
+                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    <span class="vip-label"><i class="fas fa-crown"></i> VIP User</span>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i>
+                <span class="btn-text">Submit Ticket</span>
+                <span class="spinner"></span>
+            </button>
+        </form>
+        
+        <div class="status-badge" id="statusBadge">
+            <span>🔗 Ready to submit</span>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <script>
+        (function() {
+            // ⚠️ USE THE PRODUCTION URL - with /start path
+            const WEBHOOK_URL = 'http://localhost:5678/webhook-test/start';
+            
+            const form = document.getElementById('supportForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const statusBadge = document.getElementById('statusBadge');
+
+            function showToast(message, type = 'success') {
+                toast.className = `toast ${type}`;
+                toastMessage.textContent = message;
+                void toast.offsetWidth;
+                toast.classList.add('show');
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+
+            function setLoading(loading) {
+                if (loading) {
+                    submitBtn.classList.add('loading');
+                    submitBtn.disabled = true;
+                } else {
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                }
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                const payload = {
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    'issue type': document.getElementById('issueType').value,
+                    'issue discription': document.getElementById('issueDescription').value.trim(),
+                    'is vip': document.getElementById('isVip').checked ? 'true' : 'false'
+                };
+
+                setLoading(true);
+                statusBadge.innerHTML = '<span>⏳ Sending...</span>';
+
+                try {
+                    console.log('📤 Sending to:', WEBHOOK_URL);
+                    console.log('📦 Payload:', payload);
+
+                    const response = await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                    });
+
+                    console.log('📥 Response status:', response.status);
+                    
+                    const text = await response.text();
+                    console.log('📥 Response body:', text);
+
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch {
+                        data = { message: text || 'Success' };
+                    }
+
+                    if (response.ok) {
+                        showToast('✅ Support ticket submitted successfully!', 'success');
+                        statusBadge.innerHTML = '<span class="connected">✅ Submitted successfully!</span>';
+                        form.reset();
+                    } else {
+                        showToast(`❌ Error: ${data.message || response.status}`, 'error');
+                        statusBadge.innerHTML = `<span class="disconnected">❌ Error: ${response.status}</span>`;
+                    }
+
+                } catch (error) {
+                    console.error('❌ Error:', error);
+                    showToast('❌ ' + error.message, 'error');
+                    statusBadge.innerHTML = `<span class="disconnected">❌ ${error.message}</span>`;
+                } finally {
+                    setLoading(false);
+                }
+            });
+
+            toast.addEventListener('click', () => {
+                toast.classList.remove('show');
+            });
+
+            console.log('✅ Support form ready');
+            console.log('🔗 Webhook URL:', WEBHOOK_URL);
+        })();
+    </script>
+
+</body>
+</html>

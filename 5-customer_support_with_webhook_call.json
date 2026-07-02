@@ -1,0 +1,521 @@
+{
+  "name": "customer_support_with_webhook_call",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a92aeef4-291e-4a11-829f-0ba973c27b51",
+              "name": "name",
+              "value": "john",
+              "type": "string"
+            },
+            {
+              "id": "be7618dc-90ee-4b89-805d-0fd23a39ff37",
+              "name": "issure type",
+              "value": "login",
+              "type": "string"
+            },
+            {
+              "id": "8a1017cd-057c-4058-bdc7-7b417cd0dc59",
+              "name": "gmail",
+              "value": "hummamabbasi38@gmail.com",
+              "type": "string"
+            },
+            {
+              "id": "c250a5ab-eb6f-4c04-b08b-0b1e73f58dbf",
+              "name": "isssu description",
+              "value": "={{ $json.body['issue discription'] }}",
+              "type": "string"
+            },
+            {
+              "id": "025649fb-8726-499f-b244-bdd306dd60e4",
+              "name": "is vip",
+              "value": "false",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "75bd87ea-ced4-48a5-bd9a-58cafe69a9f0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ab5cd197-752d-423f-a456-1d86cd505f0e",
+              "leftValue": "={{ $json['is vip'] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        192,
+        -48
+      ],
+      "id": "923b0cd1-28d7-4d2b-a5e7-12e4008d9a19",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Edit Fields').item.json['issure type'] }}",
+                    "rightValue": "billing issue",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f2d8b7ed-e787-45e2-b01e-b25c4cd0f2b6"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "491fc101-0ff4-44c5-b7e5-e5852c37c40c",
+                    "leftValue": "={{ $('Edit Fields').item.json['issure type'] }}",
+                    "rightValue": "login",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5f3fa178-6360-4c64-8c1b-8feb1fab7662",
+                    "leftValue": "={{ $('Edit Fields').item.json['issure type'] }}",
+                    "rightValue": "shipment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        -144
+      ],
+      "id": "0dfd6153-4bd8-4882-a21f-7aaebb944bed",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Edit Fields').item.json['issure type'] }}",
+                    "rightValue": "billing issue",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f2d8b7ed-e787-45e2-b01e-b25c4cd0f2b6"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "491fc101-0ff4-44c5-b7e5-e5852c37c40c",
+                    "leftValue": "={{ $('Edit Fields').item.json['issure type'] }}",
+                    "rightValue": "login",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5f3fa178-6360-4c64-8c1b-8feb1fab7662",
+                    "leftValue": "={{ $('Edit Fields').item.json['issure type'] }}",
+                    "rightValue": "shipment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        224
+      ],
+      "id": "2294d22f-6a1c-4c1e-a131-315541d13f96",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "sendTo": "rajahuzaifawajid0@gmail.com",
+        "subject": "={{ $json['issure type'] }}",
+        "emailType": "text",
+        "message": "=hello humam resolve his / her issue and contact on  {{ $json.gmail }}\n\ndetail to isue is given below: \n{{ $json['isssu description'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1104,
+        272
+      ],
+      "id": "4ada540a-6233-463d-8fe1-07876c07fc13",
+      "name": "Send a message",
+      "webhookId": "9b3f3f2c-146e-4229-b7d6-a3a7314a8418",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "75xpOTKFeFLHwnMm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "start",
+        "responseMode": "lastNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        -48
+      ],
+      "id": "81110dd9-330b-4e09-83d7-389b6581ae8a",
+      "name": "Webhook",
+      "webhookId": "e96ef9f4-8bab-49d6-8282-878e896fcc88"
+    },
+    {
+      "parameters": {
+        "sendTo": "rajahuzaifawajid0@gmail.com",
+        "subject": "={{ $json['issure type'] }}",
+        "emailType": "text",
+        "message": "=hello humam resolve his / her issue and contact on  {{ $json.gmail }}\n\ndetail to isue is given below: \n{{ $json['isssu description'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        -288
+      ],
+      "id": "519dac0d-1db0-49ff-bed4-84a162721fea",
+      "name": "Send a message1",
+      "webhookId": "9b3f3f2c-146e-4229-b7d6-a3a7314a8418",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "75xpOTKFeFLHwnMm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "rajahuzaifawajid0@gmail.com",
+        "subject": "={{ $json['issure type'] }}",
+        "emailType": "text",
+        "message": "=hello humam resolve his / her issue and contact on  {{ $json.gmail }}\n\ndetail to isue is given below: \n{{ $json['isssu description'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1104,
+        -144
+      ],
+      "id": "fdf98562-db22-47d4-8da9-ffdf6d53f3b3",
+      "name": "Send a message2",
+      "webhookId": "9b3f3f2c-146e-4229-b7d6-a3a7314a8418",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "75xpOTKFeFLHwnMm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "rajahuzaifawajid0@gmail.com",
+        "subject": "={{ $json['issure type'] }}",
+        "emailType": "text",
+        "message": "=hello humam resolve his / her issue and contact on  {{ $json.gmail }}\n\ndetail to isue is given below: \n{{ $json['isssu description'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        144
+      ],
+      "id": "3e7148bd-5f5f-45b9-a64b-188c9821d44f",
+      "name": "Send a message3",
+      "webhookId": "9b3f3f2c-146e-4229-b7d6-a3a7314a8418",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "75xpOTKFeFLHwnMm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "rajahuzaifawajid0@gmail.com",
+        "subject": "={{ $json['issure type'] }}",
+        "emailType": "text",
+        "message": "=hello humam resolve his / her issue and contact on  {{ $json.gmail }}\n\ndetail to isue is given below: \n{{ $json['isssu description'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        -64
+      ],
+      "id": "1d4bc203-cd5d-48ea-b37f-9479f50d9e3e",
+      "name": "Send a message5",
+      "webhookId": "9b3f3f2c-146e-4229-b7d6-a3a7314a8418",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "75xpOTKFeFLHwnMm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "rajahuzaifawajid0@gmail.com",
+        "subject": "={{ $json['issure type'] }}",
+        "emailType": "text",
+        "message": "=hello humam resolve his / her issue and contact on  {{ $json.gmail }}\n\ndetail to isue is given below: \n{{ $json['isssu description'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        416
+      ],
+      "id": "2ea358d1-628c-45a0-8c64-94061e719742",
+      "name": "Send a message6",
+      "webhookId": "9b3f3f2c-146e-4229-b7d6-a3a7314a8418",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "75xpOTKFeFLHwnMm",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "19717d02-1f0f-4ab4-b073-1540234ed87d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "66acba572c5666b755666429c990efc434a00bbeb993c123c12d2c762baea5db"
+  },
+  "nodeGroups": [],
+  "id": "e6quoSBk4lZUCtCy",
+  "tags": []
+}
