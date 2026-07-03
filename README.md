@@ -9,7 +9,11 @@
 
 [Lecture 3 : send email to list of items using local files ](https://malikabdulsalam.github.io/AI_Automation/3-n8n_email_automation_on_local_data.html)
 
-[Lecture 4 : send email to list of items using local files ](https://malikabdulsalam.github.io/AI_Automation/5-use_of_if_switch_gmail.html)
+[Lecture 4 : Use of if and switch statement ](https://malikabdulsalam.github.io/AI_Automation/5-use_of_if_switch_gmail.html)
+
+
+
+
 
 
 
