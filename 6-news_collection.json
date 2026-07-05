@@ -1,0 +1,155 @@
+{
+  "name": "news_collection",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        -96
+      ],
+      "id": "92a5f8e1-151a-4b25-8b91-a9ec246f8f28",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://newsapi.org/v2/top-headlines?country=us&apiKey=2a847d8544e34cb4a59b113ea96b5d5c",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -256,
+        -96
+      ],
+      "id": "5b218201-c5a7-4a79-a326-fe4889e8731c",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "articles",
+        "include": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -96
+      ],
+      "id": "3ddaae8f-bc60-4300-aca4-092f2cccfcc2",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bdd6f1bd-73cf-4f17-a65d-ab7b2d5fa2a2",
+              "leftValue": "={{ $json.articles.title }}",
+              "rightValue": "=Empire",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        336,
+        -144
+      ],
+      "id": "8e016c99-aab3-432a-9f32-f05a9fd6a572",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "492d26ae-ecd2-4a7d-83dd-fd1d6993872c",
+              "name": "text_for_post",
+              "value": "={{ $json.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        32
+      ],
+      "id": "35164a85-f06a-4522-802f-d2e7a7068a79",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "722da0ef-a5d3-4331-9d59-a55c30516a38",
+  "meta": {
+    "instanceId": "e765180d9b22a1f5f25394fdb4e07a973c0ec02bdf1d39601ac41e58928cf034"
+  },
+  "nodeGroups": [],
+  "id": "L3EKIEzzTrFJaBU6",
+  "tags": []
+}
