@@ -357,6 +357,10 @@ Email is writtent in text file and mail list is in excel file of your local Comp
 workflow to creat facebook content for marketing and auto upload on daily basis
 
 ![facebook post generation ](images/facebook_post_generation.png)
+
+
+Frontend for this project
+
 ![facebook post generation ](images/facebook_post_generation_front_end.png)
 
 
