@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free APIs Directory - Student Resource</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #f8fafc 100%);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #6366f1;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .header h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .header h1 span {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #475569;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header .meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .header .meta i {
+            margin-right: 0.5rem;
+            color: #6366f1;
+        }
+
+        /* Search & Filter */
+        .search-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-section input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+            background: #fff;
+            min-width: 200px;
+        }
+
+        .search-section input:focus {
+            border-color: #6366f1;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-section .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-section .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: #fff;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-section .filter-btn:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .search-section .filter-btn.active {
+            background: #6366f1;
+            color: #fff;
+            border-color: #6366f1;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1rem 1.5rem;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stats .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .stats .stat-item i {
+            color: #6366f1;
+        }
+
+        .stats .stat-item strong {
+            color: #0f172a;
+            font-size: 1.1rem;
+        }
+
+        /* API Grid */
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .api-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .api-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            border-color: #6366f1;
+        }
+
+        .api-card .api-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .api-card .api-header .api-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #6366f1;
+            flex-shrink: 0;
+        }
+
+        .api-card .api-header .api-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .api-card .api-header .api-category {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-left: auto;
+        }
+
+        .api-card .api-header .api-category.news {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .api-card .api-header .api-category.data {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .api-card .api-header .api-category.weather {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+        .api-card .api-header .api-category.finance {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .api-card .api-header .api-category.maps {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .api-card .api-header .api-category.images {
+            background: #fce7f3;
+            color: #db2777;
+        }
+        .api-card .api-header .api-category.animals {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .api-card .api-header .api-category.social {
+            background: #fce4ec;
+            color: #e11d48;
+        }
+        .api-card .api-header .api-category.ai {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+        .api-card .api-header .api-category.utility {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .api-card .api-description {
+            color: #475569;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .api-card .api-url {
+            font-size: 0.8rem;
+            color: #6366f1;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            background: #f8fafc;
+            padding: 0.5rem 0.6rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .api-card .api-url:hover {
+            background: #eef2ff;
+            border-color: #6366f1;
+        }
+
+        .api-card .api-url i {
+            margin-right: 0.3rem;
+            color: #94a3b8;
+        }
+
+        .api-card .api-notes {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .api-card .api-notes i {
+            color: #6366f1;
+            margin-right: 0.3rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transform: translateY(120px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 999;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .toast i {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 2rem 2rem 1.5rem;
+            margin-top: 3rem;
+            border-radius: 16px;
+        }
+
+        .footer .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer .footer-content .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer .footer-content .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer .footer-content .footer-links a:hover {
+            color: #6366f1;
+        }
+
+        .footer .copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #1e293b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header .meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .search-section {
+                flex-direction: column;
+            }
+            .search-section .filter-buttons {
+                justify-content: center;
+            }
+            .api-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats {
+                justify-content: center;
+            }
+            .footer .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 1.5rem 1rem;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .api-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <span class="badge"><i class="fas fa-graduation-cap"></i> Student Resource</span>
+            <h1>Free <span>APIs</span> Directory</h1>
+            <p>A curated collection of free APIs for your projects — no credit card required!</p>
+            <div class="meta">
+                <span><i class="fas fa-database"></i> <span id="apiCount">0</span> APIs</span>
+                <span><i class="fas fa-tag"></i> <span id="categoryCount">0</span> Categories</span>
+                <span><i class="fas fa-sync"></i> Updated: <span id="updateDate">July 2026</span></span>
+                <span><i class="fas fa-code"></i> All Free Tiers Available</span>
+            </div>
+        </div>
+
+        <!-- ===== SEARCH & FILTER ===== -->
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="🔍 Search APIs by name, category, or description..." onkeyup="filterAPIs()" />
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all" onclick="filterByCategory('all')">All</button>
+                <button class="filter-btn" data-filter="data" onclick="filterByCategory('data')">📊 Data</button>
+                <button class="filter-btn" data-filter="news" onclick="filterByCategory('news')">📰 News</button>
+                <button class="filter-btn" data-filter="weather" onclick="filterByCategory('weather')">🌤️ Weather</button>
+                <button class="filter-btn" data-filter="finance" onclick="filterByCategory('finance')">💰 Finance</button>
+                <button class="filter-btn" data-filter="maps" onclick="filterByCategory('maps')">🗺️ Maps</button>
+                <button class="filter-btn" data-filter="images" onclick="filterByCategory('images')">🖼️ Images</button>
+                <button class="filter-btn" data-filter="animals" onclick="filterByCategory('animals')">🐱 Animals</button>
+                <button class="filter-btn" data-filter="social" onclick="filterByCategory('social')">📱 Social</button>
+                <button class="filter-btn" data-filter="ai" onclick="filterByCategory('ai')">🧠 AI</button>
+                <button class="filter-btn" data-filter="utility" onclick="filterByCategory('utility')">📦 Utility</button>
+            </div>
+        </div>
+
+        <!-- ===== STATS ===== -->
+        <div class="stats" id="statsContainer">
+            <span class="stat-item"><i class="fas fa-database"></i> Total: <strong id="count-total">0</strong></span>
+            <span class="stat-item"><i class="fas fa-check-circle" style="color: #22c55e;"></i> No-Key APIs: <strong id="count-nokey">0</strong></span>
+            <span class="stat-item"><i class="fas fa-key" style="color: #eab308;"></i> Requires Key: <strong id="count-key">0</strong></span>
+        </div>
+
+        <!-- ===== API GRID ===== -->
+        <div class="api-grid" id="apiGrid"></div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div>
+                    <h5 style="color: #fff; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-graduation-cap" style="color: #6366f1;"></i> Student API Directory
+                    </h5>
+                    <p style="font-size: 0.85rem; margin-top: 0.25rem;">Learn, build, and experiment with free APIs</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#" onclick="showToast('📋 Tip: Click any URL to copy it to clipboard!', 'success')">
+                        <i class="fas fa-info-circle"></i> Tip
+                    </a>
+                    <a href="#" onclick="showToast('📚 Check the documentation for each API before using!', 'success')">
+                        <i class="fas fa-book"></i> Docs
+                    </a>
+                    <a href="#" onclick="showToast('⭐ Found this useful? Share it with your classmates!', 'success')">
+                        <i class="fas fa-star"></i> Share
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 API Directory. Free for educational use. <i class="fas fa-heart" style="color: #ef4444;"></i>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== API DATA =====
+        const apis = [
+            // ===== DATA APIs (No Key Needed) =====
+            {
+                name: "JSONPlaceholder (Posts)",
+                url: "https://jsonplaceholder.typicode.com/posts",
+                category: "data",
+                icon: "fa-code",
+                description: "100 dummy blog posts for testing and prototyping.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "JSONPlaceholder (Users)",
+                url: "https://jsonplaceholder.typicode.com/users",
+                category: "data",
+                icon: "fa-users",
+                description: "10 dummy users with names, emails, and addresses.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Random User API",
+                url: "https://randomuser.me/api/",
+                category: "data",
+                icon: "fa-user-random",
+                description: "Get 1 random user profile with avatar and details.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Random User (Multiple)",
+                url: "https://randomuser.me/api/?results=10",
+                category: "data",
+                icon: "fa-user-group",
+                description: "Get 10 random user profiles at once.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "WorldTimeAPI",
+                url: "https://worldtimeapi.org/api/timezone/Europe/London",
+                category: "data",
+                icon: "fa-clock",
+                description: "Get the current time in London (or any timezone).",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "IPinfo.io",
+                url: "https://ipinfo.io/json",
+                category: "data",
+                icon: "fa-map-pin",
+                description: "Get your IP address and location details.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+
+            // ===== NEWS APIs =====
+            {
+                name: "NewsAPI.org (US Top)",
+                url: "https://newsapi.org/v2/top-headlines?country=us&apiKey=YOUR_API_KEY",
+                category: "news",
+                icon: "fa-newspaper",
+                description: "Get top headlines from the United States.",
+                notes: "Register at newsapi.org for free API key",
+                requiresKey: true
+            },
+            {
+                name: "NewsAPI.org (Tech)",
+                url: "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=YOUR_API_KEY",
+                category: "news",
+                icon: "fa-microchip",
+                description: "Get top technology news from the US.",
+                notes: "Register at newsapi.org for free API key",
+                requiresKey: true
+            },
+            {
+                name: "NewsAPI.org (Search)",
+                url: "https://newsapi.org/v2/everything?q=artificial+intelligence&apiKey=YOUR_API_KEY",
+                category: "news",
+                icon: "fa-search",
+                description: "Search news by keyword (e.g., artificial intelligence).",
+                notes: "Register at newsapi.org for free API key",
+                requiresKey: true
+            },
+            {
+                name: "GNews API",
+                url: "https://gnews.io/api/v4/top-headlines?category=technology&lang=en&country=us&max=10&apikey=YOUR_API_KEY",
+                category: "news",
+                icon: "fa-globe",
+                description: "Get top technology headlines from the US.",
+                notes: "Register at gnews.io for free API key",
+                requiresKey: true
+            },
+
+            // ===== WEATHER APIs =====
+            {
+                name: "OpenWeatherMap",
+                url: "https://api.openweathermap.org/data/2.5/weather?q=London&appid=YOUR_API_KEY&units=metric",
+                category: "weather",
+                icon: "fa-cloud-sun",
+                description: "Get current weather for any city (in Celsius).",
+                notes: "Register at openweathermap.org for free API key",
+                requiresKey: true
+            },
+            {
+                name: "OpenWeatherMap (Forecast)",
+                url: "https://api.openweathermap.org/data/2.5/forecast?q=London&appid=YOUR_API_KEY&units=metric",
+                category: "weather",
+                icon: "fa-cloud-rain",
+                description: "Get 5-day weather forecast for any city.",
+                notes: "Register at openweathermap.org for free API key",
+                requiresKey: true
+            },
+            {
+                name: "WeatherAPI",
+                url: "https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=London",
+                category: "weather",
+                icon: "fa-sun",
+                description: "Get current weather with detailed conditions.",
+                notes: "Register at weatherapi.com for free API key",
+                requiresKey: true
+            },
+            {
+                name: "WeatherAPI (Forecast)",
+                url: "https://api.weatherapi.com/v1/forecast.json?key=YOUR_API_KEY&q=London&days=3",
+                category: "weather",
+                icon: "fa-cloud-sun-rain",
+                description: "Get 3-day weather forecast.",
+                notes: "Register at weatherapi.com for free API key",
+                requiresKey: true
+            },
+
+            // ===== FINANCE & CRYPTO APIs =====
+            {
+                name: "Alpha Vantage (Stock)",
+                url: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=YOUR_API_KEY",
+                category: "finance",
+                icon: "fa-chart-line",
+                description: "Get daily stock prices for Microsoft (MSFT).",
+                notes: "Register at alphavantage.co for free API key",
+                requiresKey: true
+            },
+            {
+                name: "Alpha Vantage (Crypto)",
+                url: "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=USD&apikey=YOUR_API_KEY",
+                category: "finance",
+                icon: "fa-bitcoin",
+                description: "Get daily Bitcoin prices in USD.",
+                notes: "Register at alphavantage.co for free API key",
+                requiresKey: true
+            },
+            {
+                name: "ExchangeRate-API",
+                url: "https://api.exchangerate-api.com/v4/latest/USD",
+                category: "finance",
+                icon: "fa-dollar-sign",
+                description: "Get exchange rates for all currencies.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "CoinGecko",
+                url: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false",
+                category: "finance",
+                icon: "fa-coins",
+                description: "Get top 10 cryptocurrencies by market cap.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+
+            // ===== MAPS & LOCATION APIs =====
+            {
+                name: "Nominatim (Geocode)",
+                url: "https://nominatim.openstreetmap.org/search?q=London&format=json",
+                category: "maps",
+                icon: "fa-search-location",
+                description: "Convert address 'London' to coordinates.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Nominatim (Reverse)",
+                url: "https://nominatim.openstreetmap.org/reverse?lat=51.5074&lon=-0.1278&format=json",
+                category: "maps",
+                icon: "fa-map-pin",
+                description: "Convert coordinates to address.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "IP-API",
+                url: "http://ip-api.com/json/",
+                category: "maps",
+                icon: "fa-location-dot",
+                description: "Get IP location data (city, region, country).",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Geoapify",
+                url: "https://api.geoapify.com/v1/geocode/search?text=London&apiKey=YOUR_API_KEY",
+                category: "maps",
+                icon: "fa-globe",
+                description: "Geocode addresses with rich location data.",
+                notes: "Register at geoapify.com for free API key",
+                requiresKey: true
+            },
+
+            // ===== IMAGE & DESIGN APIs =====
+            {
+                name: "Picsum Photos",
+                url: "https://picsum.photos/200/300",
+                category: "images",
+                icon: "fa-image",
+                description: "Get a random placeholder image (200x300).",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Picsum (Specific)",
+                url: "https://picsum.photos/id/1/200/300",
+                category: "images",
+                icon: "fa-image",
+                description: "Get a specific image by ID.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "PlaceKitten",
+                url: "https://placekitten.com/200/300",
+                category: "images",
+                icon: "fa-cat",
+                description: "Cute kitten placeholder image.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "PlaceBear",
+                url: "https://placebear.com/200/300",
+                category: "images",
+                icon: "fa-paw",
+                description: "Bear placeholder image.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "HTTP Cat",
+                url: "https://http.cat/200",
+                category: "images",
+                icon: "fa-cat",
+                description: "Cat image for HTTP status code 200 (OK).",
+                notes: "No API key required",
+                requiresKey: false
+            },
+
+            // ===== ANIMALS APIs =====
+            {
+                name: "RandomDog",
+                url: "https://random.dog/woof.json",
+                category: "animals",
+                icon: "fa-dog",
+                description: "Get a random dog image URL.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "RandomFox",
+                url: "https://randomfox.ca/floof/",
+                category: "animals",
+                icon: "fa-paw",
+                description: "Get a random fox image.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Cat Facts",
+                url: "https://catfact.ninja/fact",
+                category: "animals",
+                icon: "fa-cat",
+                description: "Get a random cat fact.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Dog Facts",
+                url: "https://dog-api.kinduff.com/api/facts",
+                category: "animals",
+                icon: "fa-dog",
+                description: "Get a random dog fact.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+
+            // ===== SOCIAL APIs =====
+            {
+                name: "GitHub User",
+                url: "https://api.github.com/users/octocat",
+                category: "social",
+                icon: "fa-github",
+                description: "Get GitHub user data for 'octocat'.",
+                notes: "No API key required (limited rate)",
+                requiresKey: false
+            },
+            {
+                name: "GitHub Repos",
+                url: "https://api.github.com/users/octocat/repos",
+                category: "social",
+                icon: "fa-repo",
+                description: "Get all repositories for 'octocat'.",
+                notes: "No API key required (limited rate)",
+                requiresKey: false
+            },
+            {
+                name: "Reddit (Hot)",
+                url: "https://www.reddit.com/r/programming/hot.json",
+                category: "social",
+                icon: "fa-reddit",
+                description: "Get hot posts from r/programming.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+
+            // ===== AI & MACHINE LEARNING APIs =====
+            {
+                name: "Hugging Face (Sentiment)",
+                url: "https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english",
+                category: "ai",
+                icon: "fa-brain",
+                description: "Sentiment analysis - classify text as positive or negative.",
+                notes: "Register at huggingface.co for free API key",
+                requiresKey: true
+            },
+
+            // ===== UTILITY APIs =====
+            {
+                name: "QR Code Generator",
+                url: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Hello",
+                category: "utility",
+                icon: "fa-qrcode",
+                description: "Generate a QR code for any text or URL.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Country Flags",
+                url: "https://flagcdn.com/us.svg",
+                category: "utility",
+                icon: "fa-flag",
+                description: "Get the US flag in SVG format.",
+                notes: "No API key required",
+                requiresKey: false
+            },
+            {
+                name: "Dictionary API",
+                url: "https://api.dictionaryapi.dev/api/v2/entries/en/hello",
+                category: "utility",
+                icon: "fa-book",
+                description: "Get definitions for the word 'hello'.",
+                notes: "No API key required",
+                requiresKey: false
+            }
+        ];
+
+        // ===== DOM ELEMENTS =====
+        const apiGrid = document.getElementById('apiGrid');
+        const searchInput = document.getElementById('searchInput');
+        let currentCategory = 'all';
+
+        // ===== TOAST =====
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            void toast.offsetWidth;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ===== RENDER APIS =====
+        function renderAPIs(apisToRender) {
+            if (apisToRender.length === 0) {
+                apiGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #94a3b8;">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                        <h3 style="color: #0f172a;">No APIs Found</h3>
+                        <p>Try adjusting your search or filter criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            apiGrid.innerHTML = apisToRender.map(api => `
+                <div class="api-card" data-category="${api.category}" data-name="${api.name.toLowerCase()}">
+                    <div class="api-header">
+                        <div class="api-icon"><i class="fas ${api.icon}"></i></div>
+                        <span class="api-name">${api.name}</span>
+                        <span class="api-category ${api.category}">${api.category}</span>
+                    </div>
+                    <div class="api-description">${api.description}</div>
+                    <div class="api-url" onclick="copyToClipboard('${api.url}')" title="Click to copy URL">
+                        <i class="fas fa-link"></i> ${api.url}
+                    </div>
+                    <div class="api-notes">
+                        <i class="fas ${api.requiresKey ? 'fa-key' : 'fa-check-circle'}" style="color: ${api.requiresKey ? '#eab308' : '#22c55e'};"></i>
+                        ${api.notes}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== COPY TO CLIPBOARD =====
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 URL copied to clipboard!', 'success');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('📋 URL copied to clipboard!', 'success');
+            });
+        }
+
+        // ===== UPDATE STATS =====
+        function updateStats() {
+            const total = apis.length;
+            const noKey = apis.filter(api => !api.requiresKey).length;
+            const withKey = apis.filter(api => api.requiresKey).length;
+            
+            document.getElementById('count-total').textContent = total;
+            document.getElementById('count-nokey').textContent = noKey;
+            document.getElementById('count-key').textContent = withKey;
+            document.getElementById('apiCount').textContent = total;
+            
+            // Count unique categories
+            const categories = new Set(apis.map(api => api.category));
+            document.getElementById('categoryCount').textContent = categories.size;
+        }
+
+        // ===== FILTER APIS =====
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                }
+            });
+
+            filterAPIs();
+        }
+
+        function filterAPIs() {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            let filtered = apis.filter(api => {
+                // Category filter
+                if (currentCategory !== 'all' && api.category !== currentCategory) {
+                    return false;
+                }
+                // Search filter
+                if (query) {
+                    const searchText = (api.name + ' ' + api.description + ' ' + api.category + ' ' + api.notes).toLowerCase();
+                    return searchText.includes(query);
+                }
+                return true;
+            });
+
+            renderAPIs(filtered);
+        }
+
+        // ===== KEYBOARD SHORTCUT =====
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+            if (e.key === 'Escape') {
+                searchInput.blur();
+            }
+        });
+
+        // ===== INIT =====
+        renderAPIs(apis);
+        updateStats();
+
+        console.log(`✅ Loaded ${apis.length} APIs for students!`);
+        console.log('💡 Tip: Click any URL to copy it to clipboard');
+    </script>
+
+</body>
+</html>
