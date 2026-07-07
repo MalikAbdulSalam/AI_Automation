@@ -14,6 +14,9 @@
 [Lecture 4 : http node and API calling](https://malikabdulsalam.github.io/AI_Automation/6-shimpment_handling.html)
 
 
+[Lecture 4 : list of free APIs](https://malikabdulsalam.github.io/AI_Automation/9-free_api_ursl.html)
+
+
 
 
 
