@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Facebook AI Automation</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .box {
+    width: 420px;
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+  }
+
+  input, select {
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  option { color: black; }
+
+  button {
+    background: #00c6ff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #0072ff;
+  }
+
+  .result {
+    margin-top: 15px;
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+  }
+
+  img {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>🚀 Facebook AI Automation</h2>
+
+  <input id="topic" placeholder="Enter topic (e.g. village scene)" />
+
+  <select id="tone">
+    <option value="professional">Professional</option>
+    <option value="friendly">Friendly</option>
+    <option value="funny">Funny</option>
+    <option value="motivational">Motivational</option>
+  </select>
+
+  <button onclick="generate()">Generate</button>
+
+  <div class="result" id="result">Waiting...</div>
+
+  <img id="img" />
+</div>
+
+<script>
+async function generate() {
+
+  const topic = document.getElementById("topic").value;
+  const tone = document.getElementById("tone").value;
+
+  const res = await fetch("http://localhost:5678/webhook/facebook_post", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ topic, tone })
+  });
+
+  const data = await res.json();
+
+  console.log("FULL RESPONSE:", data);
+
+  // FIX: because response is array
+  const output = data[0]?.output;
+
+  if (!output) {
+    document.getElementById("result").innerText = "No data received";
+    return;
+  }
+
+  // Show post
+  document.getElementById("result").innerText =
+    "POST:\n" + output.post +
+    "\n\nIMAGE PROMPT:\n" + output.image_prompt;
+
+  // Generate image from prompt
+  const imageUrl =
+    "https://image.pollinations.ai/prompt/" +
+    encodeURIComponent(output.image_prompt);
+
+  document.getElementById("img").src = imageUrl;
+}
+</script>
+
+</body>
+</html>
