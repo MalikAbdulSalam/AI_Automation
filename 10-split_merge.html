@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split → Process → Merge: n8n Core Nodes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f6f8fa;
+            color: #1e1e2f;
+            padding: 2rem 1.5rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: white;
+            padding: 2.5rem 2.8rem;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+            color: #0b1c2f;
+        }
+
+        .subhead {
+            font-size: 1.1rem;
+            color: #4a5568;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1rem;
+            margin-top: 0.25rem;
+            margin-bottom: 2rem;
+            background: #f0f4ff;
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+            color: #0b1c2f;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 0.4rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.8rem;
+            margin-bottom: 0.4rem;
+            color: #1e293b;
+        }
+
+        h4 {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.2rem;
+            color: #1e293b;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        ul,
+        ol {
+            margin: 0.6rem 0 1.2rem 1.8rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.9rem;
+            border-radius: 30px;
+            letter-spacing: 0.02em;
+            margin-right: 0.4rem;
+        }
+
+        .highlight-box {
+            background: #f8fafc;
+            border-left: 6px solid #3b82f6;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0;
+            border-radius: 12px;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .highlight-box strong {
+            color: #0b1c2f;
+        }
+
+        .node-card {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 1.2rem 1.6rem;
+            margin: 1.2rem 0;
+            border: 1px solid #e9edf2;
+        }
+
+        .node-card strong {
+            font-size: 1.1rem;
+        }
+
+        .inline-code {
+            background: #edf2f7;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #1a202c;
+        }
+
+        .divider {
+            margin: 2.2rem 0 1.8rem;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        .footer-note {
+            background: #f1f4f9;
+            border-radius: 14px;
+            padding: 1.5rem 2rem;
+            margin-top: 2.5rem;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        .footer-note strong {
+            color: #0b1c2f;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Split → Process → Merge</h1>
+        <div class="subhead">
+            📘 Notes on the core n8n nodes that power scalable, resilient automation.
+        </div>
+
+        <p>
+            This pattern is a fundamental workflow architecture in n8n, especially when dealing with complex or voluminous data.
+            The core idea is to break down a large or complex data set into manageable pieces, perform an action on each piece,
+            and then recombine the results.
+        </p>
+
+        <!-- ===== SPLIT ===== -->
+        <h2>1. Split <span style="font-weight:400; font-size:1.2rem; color:#4a5568;">(Loop Over Items / Split Out)</span></h2>
+
+        <p>
+            The first step involves separating your data into individual items for processing. In n8n, two main nodes handle this:
+        </p>
+
+        <div class="node-card">
+            <strong>🔁 Loop Over Items (Split in Batches)</strong>
+            <p style="margin-top:0.3rem;">
+                This node is used to break a list of items into smaller, manageable batches.
+                This is particularly useful for avoiding API rate limits or processing a large dataset in chunks.
+                You define a <span class="inline-code">Batch Size</span> to control how many items are passed through the loop in each iteration.
+            </p>
+
+            <div class="highlight-box">
+                <strong>📌 Use Case:</strong> If you have 100 records to update in an external system that limits requests to 10 per minute,
+                you can set the Batch Size to 10. This node will output 10 items at a time, allowing you to insert a <span class="inline-code">Wait</span> node
+                to respect the rate limit.
+            </div>
+
+            <p>
+                <strong>Key Context:</strong> The node provides a <span class="inline-code">currentRunIndex</span> (the number of the current batch)
+                and a <span class="inline-code">noItemsLeft</span> (a boolean indicating if all items are processed) in its context,
+                which you can use for advanced logic.
+            </p>
+        </div>
+
+        <div class="node-card">
+            <strong>🔀 Split Out (Item Lists Node)</strong>
+            <p style="margin-top:0.3rem;">
+                This node is used to handle <strong>nested data</strong>, where a single item contains an array within it.
+            </p>
+
+            <div class="highlight-box">
+                <strong>📌 Use Case:</strong> Imagine you have an API response for an invoice that contains a list of charges.
+                n8n sees this as one item. By using "Split Out" on the <span class="inline-code">charges</span> field,
+                you can create a separate item for each individual charge, allowing you to process each one (e.g., calculate its total).
+            </div>
+
+            <p>
+                <strong>Best Practice:</strong> When using Split Out, remember to include fields from the parent item
+                (like <span class="inline-code">invoice_id</span>) so the context isn't lost after the split.
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <strong>ℹ️ Note:</strong> n8n automatically processes each item for many nodes; however, specific nodes like <span class="inline-code">RSS Feed Read</span>
+            process only the first item. In these cases, a Split node is essential to force the workflow to handle each input separately.
+        </div>
+
+        <!-- ===== PROCESS ===== -->
+        <h2>2. Process</h2>
+
+        <p>
+            This is the core of the workflow, where you perform your automation logic on each split item.
+            Since the data is now broken down into individual items, you can connect almost any node to act upon them.
+        </p>
+
+        <div class="node-card">
+            <strong>⚙️ Common Actions</strong>
+            <p style="margin-top:0.3rem;">
+                This could be an <span class="inline-code">HTTP Request</span> to send data to an API,
+                an <span class="inline-code">Edit Fields</span> node to transform the data,
+                an <span class="inline-code">If</span> node to filter or route items,
+                or a <span class="inline-code">Code</span> node for complex custom logic.
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <strong>🧠 The Logic:</strong> n8n will execute the "Process" part of your workflow <strong>once for every item</strong>
+            that comes out of the "Split" stage. For example, if you split out 20 charges, a subsequent <span class="inline-code">HTTP Request</span>
+            node will be called 20 times — once for each charge.
+        </div>
+
+        <!-- ===== MERGE ===== -->
+        <h2>3. Merge</h2>
+
+        <p>
+            After all items have been processed, the Merge node recombines the data streams.
+            It takes multiple inputs and combines them into a single output.
+        </p>
+
+        <div class="node-card">
+            <strong>📎 Append</strong>
+            <p>Keeps data from all inputs, outputting the items from each input one after another.</p>
+        </div>
+
+        <div class="node-card">
+            <strong>🔗 Combine (by Position)</strong>
+            <p>Merges items based on their order (e.g., the first item from Input 1 merges with the first from Input 2).</p>
+        </div>
+
+        <div class="node-card">
+            <strong>🔑 Combine (by Matching Fields)</strong>
+            <p>Merges data by matching values in specified fields. This operates like an <strong>SQL Join</strong>.</p>
+            <ul>
+                <li><strong>Output Types:</strong> You can choose to keep matches (inner join), non-matches, everything (outer join),
+                or to enrich one input with data from the other (left/right join).</li>
+            </ul>
+        </div>
+
+        <div class="node-card">
+            <strong>🧾 SQL Query</strong>
+            <p>Allows you to write a custom SQL statement to merge the data from multiple inputs for advanced combinations.</p>
+        </div>
+
+        <div class="node-card">
+            <strong>📦 Aggregate (Item Lists)</strong>
+            <p>This is the counterpart to "Split Out". It takes many processed items and groups them back together into a single item,
+            effectively reversing the split process.</p>
+        </div>
+
+        <div class="node-card">
+            <strong>📊 Summarize (Item Lists)</strong>
+            <p>Rather than merging all the raw data, this node computes statistics (like sums, averages, or counts) across the processed items,
+            functioning like a pivot table.</p>
+        </div>
+
+        <!-- ===== PATTERN IN PRACTICE ===== -->
+        <hr class="divider" />
+
+        <h2>Pattern in Practice</h2>
+
+        <p>
+            A common and powerful example of this pattern is <strong>processing a list of invoices</strong>:
+        </p>
+
+        <div class="node-card" style="background:#f0f7ff; border-color:#b7d0f0;">
+            <strong>🧾 Invoice Processing Workflow</strong>
+            <ul style="margin-top:0.5rem;">
+                <li><strong>Split:</strong> You receive an API response with multiple invoices. Use <span class="inline-code">Loop Over Items</span> to iterate through the list one by one.</li>
+                <li><strong>Process:</strong> For each invoice, you might use an <span class="inline-code">HTTP Request</span> to call a "mark as paid" endpoint on a payment gateway.</li>
+                <li><strong>Merge:</strong> After all invoices are processed, you can use the Merge (or Aggregate) node to combine the success/failure responses from all the API calls into a final single report item.</li>
+            </ul>
+        </div>
+
+        <!-- ===== FINAL TAKEAWAY ===== -->
+        <div class="footer-note">
+            <strong>🚀 Why This Pattern Matters</strong><br />
+            This "Split, Process, Merge" architecture gives you fine-grained control over how your workflow handles data,
+            making it more <strong>robust</strong> and <strong>scalable</strong> for complex automation tasks.
+        </div>
+
+    </div>
+
+</body>
+</html>
