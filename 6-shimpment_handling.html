@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecture Notes: API Integration & Automation with n8n</title>
+    <title>📦 Order Fulfillment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,819 +14,602 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #f6f8fa;
-            color: #24292f;
-            line-height: 1.6;
-            padding: 2rem 1rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            border-bottom: 2px solid #d0d7de;
-            padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
-            color: #0d1117;
-        }
-
-        h2 {
-            font-size: 1.8rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.3rem;
-            border-bottom: 1px solid #d0d7de;
-            color: #0d1117;
-        }
-
-        h3 {
-            font-size: 1.3rem;
-            margin-top: 1.8rem;
-            margin-bottom: 0.8rem;
-            color: #0d1117;
-        }
-
-        h4 {
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #0d1117;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        ul, ol {
-            margin: 0.5rem 0 1rem 2rem;
-        }
-
-        li {
-            margin-bottom: 0.3rem;
-        }
-
-        .highlight-box {
-            background: #f1f8ff;
-            border-left: 4px solid #0969da;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .highlight-box strong {
-            color: #0969da;
-        }
-
-        .warning-box {
-            background: #fffbeb;
-            border-left: 4px solid #d4920a;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .warning-box strong {
-            color: #b07a0a;
-        }
-
-        pre {
-            background: #f6f8fa;
-            border: 1px solid #d0d7de;
-            border-radius: 6px;
-            padding: 1rem 1.2rem;
-            overflow-x: auto;
-            font-size: 0.9rem;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            margin: 1.2rem 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        code {
-            background: #f1f8ff;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-        }
-
-        .inline-code {
-            background: #f1f8ff;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-
-        table {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-            border: 1px solid #d0d7de;
+            max-width: 520px;
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease;
         }
 
-        th {
-            background: #f6f8fa;
-            font-weight: 600;
-            padding: 0.75rem 1rem;
-            text-align: left;
-            border-bottom: 2px solid #d0d7de;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #d0d7de;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .mermaid-container {
-            background: #f6f8fa;
-            padding: 1.5rem;
-            border-radius: 8px;
+        .header {
             text-align: center;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
-            border: 1px solid #d0d7de;
+            margin-bottom: 32px;
         }
 
-        .mermaid-container .arrow {
-            color: #0969da;
-            font-weight: bold;
+        .header .icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .header .icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 6px;
+        }
+
+        .form-group label .required {
+            color: #e53e3e;
+            margin-left: 2px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #a0aec0;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .webhook-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: #f7fafc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .webhook-status .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .webhook-status .dot.online {
+            background: #48bb78;
+        }
+
+        .webhook-status .dot.offline {
+            background: #fc8181;
+        }
+
+        .webhook-status .dot.checking {
+            background: #f6ad55;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .webhook-status .status-text {
+            color: #4a5568;
+            flex: 1;
+        }
+
+        .webhook-status .webhook-url {
+            color: #a0aec0;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit .spinner {
+            display: none;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .btn-submit.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-submit.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .response-box {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .response-box.success {
+            display: block;
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+        }
+
+        .response-box.error {
+            display: block;
+            background: #fff5f5;
+            border: 1px solid #fc8181;
+        }
+
+        .response-box .response-icon {
+            margin-right: 10px;
+        }
+
+        .response-box.success .response-icon {
+            color: #48bb78;
+        }
+
+        .response-box.error .response-icon {
+            color: #fc8181;
+        }
+
+        .response-box .response-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .response-box .response-message {
+            font-size: 13px;
+            color: #4a5568;
+            margin-top: 4px;
+            word-break: break-all;
+        }
+
+        .response-box .response-details {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            color: #4a5568;
+            overflow-x: auto;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #a0aec0;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
         }
 
         .badge {
             display: inline-block;
-            background: #0969da;
-            color: white;
-            padding: 0.2rem 0.8rem;
+            padding: 2px 10px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 11px;
             font-weight: 600;
-            margin-right: 0.5rem;
+            background: #edf2f7;
+            color: #4a5568;
         }
 
-        .badge-green {
-            background: #2da44e;
+        .badge.express {
+            background: #fef3c7;
+            color: #d69e2e;
         }
 
-        .badge-orange {
-            background: #d4920a;
-        }
-
-        .badge-purple {
-            background: #8250df;
-        }
-
-        .toc {
-            background: #f6f8fa;
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            border: 1px solid #d0d7de;
-        }
-
-        .toc ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            columns: 2;
-        }
-
-        .toc li {
-            margin-bottom: 0.3rem;
-            padding: 0.2rem 0;
-        }
-
-        .toc a {
-            color: #0969da;
-            text-decoration: none;
-        }
-
-        .toc a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
+        /* Responsive */
+        @media (max-width: 560px) {
             .container {
-                padding: 1.5rem;
+                padding: 24px 20px;
             }
-            .toc ul {
-                columns: 1;
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
             }
-            h1 {
-                font-size: 1.8rem;
-            }
-            h2 {
-                font-size: 1.5rem;
-            }
-            pre {
-                font-size: 0.8rem;
-                padding: 0.8rem;
-            }
-            body {
-                padding: 0.5rem;
+            .header h1 {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-
-        <h1>Complete Lecture Notes: API Integration &amp; Automation with n8n</h1>
-        <p style="font-size: 1.1rem; color: #57606a; margin-bottom: 2rem;">
-            Including Practical Projects with JSONPlaceholder and NewsAPI
-        </p>
-
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h4 style="margin-top: 0;">Table of Contents</h4>
-            <ul>
-                <li><a href="#sec1">1. Understanding APIs</a></li>
-                <li><a href="#sec2">2. HTTP Request Node</a></li>
-                <li><a href="#sec3">3. Split Out Node</a></li>
-                <li><a href="#sec4">4. IF Node &amp; Filter Node</a></li>
-                <li><a href="#sec5">5. Project 1: JSONPlaceholder Post Filter</a></li>
-                <li><a href="#sec6">6. Project 2: NewsAPI Daily News Summary</a></li>
-                <li><a href="#sec7">7. Creating Your Own API with Python</a></li>
-                <li><a href="#sec8">8. Troubleshooting &amp; Best Practices</a></li>
-            </ul>
+        <!-- Header -->
+        <div class="header">
+            <div class="icon">
+                <i class="fas fa-box"></i>
+            </div>
+            <h1>Place Order</h1>
+            <p>Send order to fulfillment workflow</p>
         </div>
 
-        <!-- ============================================================ -->
-        <h2 id="sec1">1. Understanding APIs</h2>
-
-        <h3>What is an API?</h3>
-        <p><strong>API</strong> (Application Programming Interface) is like a waiter in a restaurant:</p>
-        <ul>
-            <li>You (the client) place an order (request)</li>
-            <li>The waiter (API) takes it to the kitchen (server)</li>
-            <li>The kitchen prepares your food (processes request)</li>
-            <li>The waiter brings it back to you (response)</li>
-        </ul>
-
-        <h3>APIs We Used in Our Projects</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>API</th><th>Purpose</th><th>Data Structure</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>JSONPlaceholder</strong></td><td>Fake data for testing</td><td>Direct array of posts <code>[{...}]</code></td></tr>
-                    <tr><td><strong>NewsAPI</strong></td><td>Real news articles</td><td>Object with <code>articles</code> array</td></tr>
-                </tbody>
-            </table>
+        <!-- Webhook Status -->
+        <div class="webhook-status" id="webhookStatus">
+            <span class="dot checking" id="statusDot"></span>
+            <span class="status-text" id="statusText">Checking connection...</span>
+            <span class="webhook-url" id="webhookUrlDisplay">n8n:5678</span>
         </div>
 
-        <h3>API Components Explained</h3>
-        <pre>https://newsapi.org/v2/top-headlines?country=us&amp;apiKey=YOUR_KEY
-└─────────────┘ └──────┘ └────────────┘ └──────────────────┘
-   Base URL      Endpoint   Parameters      Your Credentials</pre>
+        <!-- Order Form -->
+        <form id="orderForm" autocomplete="off">
+            <div class="form-group">
+                <label>Order ID <span class="required">*</span></label>
+                <input type="text" id="orderId" value="ORD-001" placeholder="e.g. ORD-12345" required>
+            </div>
 
-        <h3>HTTP Methods</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>Method</th><th>Purpose</th><th>Example</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><span class="badge">GET</span></td><td>Fetch data</td><td>Get news articles</td></tr>
-                    <tr><td><span class="badge badge-green">POST</span></td><td>Create data</td><td>Submit a form</td></tr>
-                    <tr><td><span class="badge badge-orange">PUT</span></td><td>Update data</td><td>Edit a profile</td></tr>
-                    <tr><td><span class="badge badge-purple">DELETE</span></td><td>Remove data</td><td>Delete a post</td></tr>
-                </tbody>
-            </table>
+            <div class="form-group">
+                <label>Customer Name <span class="required">*</span></label>
+                <input type="text" id="customerName" value="John Doe" placeholder="Full name" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Total Amount ($) <span class="required">*</span></label>
+                    <input type="number" id="totalAmount" value="1250" placeholder="0.00" min="0" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Shipping Method</label>
+                    <select id="shippingMethod">
+                        <option value="standard">🚚 Standard</option>
+                        <option value="express">⚡ Express</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Country <span class="required">*</span></label>
+                    <select id="country" required>
+                        <option value="US">🇺🇸 United States</option>
+                        <option value="UK">🇬🇧 United Kingdom</option>
+                        <option value="DE">🇩🇪 Germany</option>
+                        <option value="FR">🇫🇷 France</option>
+                        <option value="JP" selected>🇯🇵 Japan</option>
+                        <option value="CN">🇨🇳 China</option>
+                        <option value="IN">🇮🇳 India</option>
+                        <option value="AU">🇦🇺 Australia</option>
+                        <option value="CA">🇨🇦 Canada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" id="city" value="Tokyo" placeholder="Enter city">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Order</span>
+                <span class="spinner"><i class="fas fa-circle-notch"></i></span>
+            </button>
+        </form>
+
+        <!-- Response Box -->
+        <div id="responseBox" class="response-box">
+            <div style="display: flex; align-items: flex-start;">
+                <span class="response-icon"><i class="fas fa-check-circle"></i></span>
+                <div style="flex:1;">
+                    <div class="response-title" id="responseTitle">Success!</div>
+                    <div class="response-message" id="responseMessage">Order sent successfully</div>
+                    <div class="response-details" id="responseDetails"></div>
+                </div>
+            </div>
         </div>
 
-        <!-- ============================================================ -->
-        <h2 id="sec2">2. HTTP Request Node</h2>
-
-        <h3>Purpose</h3>
-        <p>The HTTP Request node is n8n's built-in web browser. It makes API calls and handles responses.</p>
-
-        <h3>Configuration for JSONPlaceholder</h3>
-        <p><strong>Basic Setup:</strong></p>
-        <pre>Method: GET
-URL: https://jsonplaceholder.typicode.com/posts
-Authentication: None</pre>
-
-        <p><strong>What it returns:</strong></p>
-        <pre>[
-  {
-    "userId": 1,
-    "id": 1,
-    "title": "sunt aut facere...",
-    "body": "quia et suscipit..."
-  },
-  // ... 100 posts total
-]</pre>
-
-        <h3>Configuration for NewsAPI</h3>
-        <p><strong>Basic Setup:</strong></p>
-        <pre>Method: GET
-URL: https://newsapi.org/v2/top-headlines?country=us&amp;apiKey=YOUR_API_KEY
-Authentication: None</pre>
-
-        <p><strong>What it returns:</strong></p>
-        <pre>{
-  "status": "ok",
-  "totalResults": 35,
-  "articles": [
-    {
-      "source": {"id": null, "name": "WABC-TV"},
-      "author": "Eyewitness News",
-      "title": "Empire State Building climbers...",
-      "description": "The climbers appeared in court...",
-      "url": "https://...",
-      "urlToImage": "https://...",
-      "publishedAt": "2026-07-03T02:45:46Z",
-      "content": "NEW YORK (WABC) -- ..."
-    }
-  ]
-}</pre>
-
-        <h3>Adding Query Parameters</h3>
-        <p>Click <strong>"Send Query Parameters"</strong> and add:</p>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>Parameter</th><th>Value</th><th>Purpose</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>country</code></td><td><code>pk</code></td><td>Get Pakistani news</td></tr>
-                    <tr><td><code>category</code></td><td><code>technology</code></td><td>Get tech news only</td></tr>
-                    <tr><td><code>apiKey</code></td><td><code>your_key</code></td><td>Authentication</td></tr>
-                </tbody>
-            </table>
+        <div class="footer">
+            <span class="badge">🚀 n8n Webhook</span>
+            <span style="margin:0 6px;">•</span>
+            <span>Order Fulfillment System</span>
         </div>
-
-        <div class="highlight-box">
-            <strong>Tips for HTTP Request Node</strong>
-            <ul style="margin: 0.5rem 0 0 1.5rem;">
-                <li>✅ Always test URLs in browser first</li>
-                <li>✅ Check for rate limits (NewsAPI: 100 requests/day)</li>
-                <li>✅ Enable "Pagination" for multiple pages</li>
-                <li>✅ Use "Send Query Parameters" for cleaner URLs</li>
-            </ul>
-        </div>
-
-        <!-- ============================================================ -->
-        <h2 id="sec3">3. Split Out Node</h2>
-
-        <h3>Purpose</h3>
-        <p>The Split Out node breaks one large item into multiple smaller items.</p>
-
-        <h3>Our Two Use Cases</h3>
-        <p><strong>For JSONPlaceholder (Direct Array):</strong></p>
-        <pre>Field To Split Out: $json
-Include: No Other Fields</pre>
-
-        <p><strong>For NewsAPI (Nested Array):</strong></p>
-        <pre>Field To Split Out: articles
-Include: All Other Fields</pre>
-
-        <h3>Why Different Settings?</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>API</th><th>Data Structure</th><th>Split Out Field</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>JSONPlaceholder</td><td>Direct array <code>[{...}]</code></td><td><code>$json</code></td></tr>
-                    <tr><td>NewsAPI</td><td>Object with array <code>{"articles": [...]}</code></td><td><code>articles</code></td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h3>Example: NewsAPI Split Out</h3>
-        <p><strong>Input (1 item):</strong></p>
-        <pre>{
-  "status": "ok",
-  "totalResults": 35,
-  "articles": [
-    {"title": "Article 1", "description": "..."},
-    {"title": "Article 2", "description": "..."}
-  ]
-}</pre>
-
-        <p><strong>Output (35 items):</strong></p>
-        <pre>Item 1: {"title": "Article 1", "description": "..."}
-Item 2: {"title": "Article 2", "description": "..."}
-...</pre>
-
-        <div class="warning-box">
-            <strong>Common Split Out Mistakes</strong>
-            <ul style="margin: 0.5rem 0 0 1.5rem;">
-                <li><strong>Mistake:</strong> Splitting wrong field → <strong>Fix:</strong> Use <code>articles</code> for NewsAPI, <code>$json</code> for JSONPlaceholder</li>
-                <li><strong>Mistake:</strong> Missing Include field → <strong>Fix:</strong> Set to "All Other Fields"</li>
-                <li><strong>Mistake:</strong> Wrong field name → <strong>Fix:</strong> Check exact spelling (case-sensitive)</li>
-            </ul>
-        </div>
-
-        <!-- ============================================================ -->
-        <h2 id="sec4">4. IF Node &amp; Filter Node</h2>
-
-        <h3>IF Node vs Filter Node</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>Feature</th><th>Filter Node</th><th>IF Node</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Purpose</strong></td><td>Keep matching items</td><td>Route to different branches</td></tr>
-                    <tr><td><strong>Outputs</strong></td><td>1 output (filtered)</td><td>2 outputs (true/false)</td></tr>
-                    <tr><td><strong>Use Case</strong></td><td>Simple filtering</td><td>Complex routing</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h3>Project 1: JSONPlaceholder Filter</h3>
-        <p><strong>Using Filter Node:</strong></p>
-        <pre>Conditions:
-  Field: body
-  Operation: Length >
-  Value: 100</pre>
-
-        <p><strong>Using IF Node:</strong></p>
-        <pre>Condition:
-  Field: ={{ $json.body.length }}
-  Operation: Number >
-  Value: 100</pre>
-
-        <h3>Project 2: NewsAPI Filter</h3>
-        <p><strong>Using Filter Node:</strong></p>
-        <pre>Conditions:
-  Field: description
-  Operation: Length >
-  Value: 100</pre>
-
-        <h3>Custom Expressions for Complex Filters</h3>
-        <p>Keep articles with title containing "Apple" AND description &gt; 100 chars:</p>
-        <pre>={{ $json.title.includes("Apple") &amp;&amp; $json.description.length > 100 }}</pre>
-
-        <!-- ============================================================ -->
-        <h2 id="sec5">5. Project 1: JSONPlaceholder Post Filter</h2>
-
-        <h3>Complete Workflow</h3>
-        <div class="mermaid-container">
-            <span class="arrow">[Schedule Trigger]</span> → <span class="arrow">[HTTP Request: JSONPlaceholder]</span> → <span class="arrow">[Split Out: Split $json]</span> → <span class="arrow">[Filter: body > 100 chars]</span> → <span class="arrow">[Edit Fields: Format summary]</span> → <span class="arrow">[Aggregate: Combine results]</span> → <span class="arrow">[Email: Send summary]</span>
-        </div>
-
-        <h3>Node-by-Node Setup</h3>
-
-        <p><strong>1. Schedule Trigger</strong></p>
-        <pre>Trigger Times: Daily
-Time: 09:00 AM</pre>
-
-        <p><strong>2. HTTP Request</strong></p>
-        <pre>Method: GET
-URL: https://jsonplaceholder.typicode.com/posts</pre>
-
-        <p><strong>3. Split Out</strong></p>
-        <pre>Field To Split Out: $json
-Include: No Other Fields</pre>
-
-        <p><strong>4. Filter Node</strong></p>
-        <pre>Conditions:
-  Field: body
-  Operation: Length >
-  Value: 100</pre>
-
-        <p><strong>5. Edit Fields</strong></p>
-        <pre>Fields:
-  - summary: ={{ $json.body.substring(0, 150) + "..." }}
-  - post_id: ={{ $json.id }}
-  - title_short: ={{ $json.title.substring(0, 30) }}</pre>
-
-        <p><strong>6. Aggregate Node</strong></p>
-        <pre>Mode: Combine Data
-Combine Mode: Merge</pre>
-
-        <p><strong>7. Email Node</strong></p>
-        <pre>To: your_email@example.com
-Subject: Daily Post Summary
-Body: ={{ $json.map(post => post.summary).join("\n\n") }}</pre>
-
-        <div class="highlight-box">
-            <strong>Expected Output</strong>
-            <ul style="margin: 0.5rem 0 0 1.5rem;">
-                <li><strong>Initial:</strong> 100 posts</li>
-                <li><strong>After Filter:</strong> ~80-90 posts (&gt;100 characters)</li>
-                <li><strong>Email:</strong> Formatted list of posts</li>
-            </ul>
-        </div>
-
-        <!-- ============================================================ -->
-        <h2 id="sec6">6. Project 2: NewsAPI Daily News Summary</h2>
-
-        <h3>Complete Workflow</h3>
-        <div class="mermaid-container">
-            <span class="arrow">[Schedule Trigger]</span> → <span class="arrow">[HTTP Request: NewsAPI]</span> → <span class="arrow">[Split Out: Split articles]</span> → <span class="arrow">[Filter: description > 100 chars]</span> → <span class="arrow">[Edit Fields: Format summary]</span> → <span class="arrow">[Aggregate: Combine results]</span> → <span class="arrow">[Email: Send news summary]</span>
-        </div>
-
-        <h3>Node-by-Node Setup</h3>
-
-        <p><strong>1. Schedule Trigger</strong></p>
-        <pre>Trigger Times: Daily
-Time: 09:00 AM</pre>
-
-        <p><strong>2. HTTP Request</strong></p>
-        <pre>Method: GET
-URL: https://newsapi.org/v2/top-headlines?country=us&amp;apiKey=YOUR_KEY</pre>
-
-        <p><strong>3. Split Out</strong></p>
-        <pre>Field To Split Out: articles
-Include: All Other Fields</pre>
-
-        <p><strong>4. Filter Node</strong></p>
-        <pre>Conditions:
-  Field: description
-  Operation: Length >
-  Value: 100</pre>
-
-        <p><strong>5. Edit Fields</strong></p>
-        <pre>Fields:
-  - summary: ={{ $json.title }} ({{ $json.description.substring(0, 150) }}...)
-  - source: ={{ $json.source.name }}
-  - news_url: ={{ $json.url }}</pre>
-
-        <p><strong>6. Aggregate Node</strong></p>
-        <pre>Mode: Combine Data
-Combine Mode: Merge</pre>
-
-        <p><strong>7. Email Node</strong></p>
-        <pre>To: your_email@example.com
-Subject: Daily News Summary - {{ new Date().toLocaleDateString() }}
-Body: ={{ $json.map(item => `📰 ${item.source}\n${item.summary}\n🔗 ${item.news_url}\n`).join('\n---\n') }}</pre>
-
-        <h3>Customizing NewsAPI Queries</h3>
-
-        <p><strong>Get Pakistani News:</strong></p>
-        <pre>https://newsapi.org/v2/top-headlines?country=pk&amp;apiKey=YOUR_KEY</pre>
-
-        <p><strong>Get Technology News:</strong></p>
-        <pre>https://newsapi.org/v2/top-headlines?category=technology&amp;apiKey=YOUR_KEY</pre>
-
-        <p><strong>Search for "Artificial Intelligence":</strong></p>
-        <pre>https://newsapi.org/v2/everything?q=artificial+intelligence&amp;apiKey=YOUR_KEY</pre>
-
-        <h3>Common NewsAPI Parameters</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>Parameter</th><th>Value Example</th><th>Purpose</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>country</code></td><td><code>pk</code>, <code>us</code>, <code>gb</code></td><td>Country code</td></tr>
-                    <tr><td><code>category</code></td><td><code>technology</code>, <code>sports</code></td><td>Topic filter</td></tr>
-                    <tr><td><code>q</code></td><td><code>artificial+intelligence</code></td><td>Search query</td></tr>
-                    <tr><td><code>from</code></td><td><code>2026-06-27</code></td><td>Start date</td></tr>
-                    <tr><td><code>sortBy</code></td><td><code>popularity</code>, <code>publishedAt</code></td><td>Order results</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- ============================================================ -->
-        <h2 id="sec7">7. Creating Your Own API with Python</h2>
-
-        <h3>Why Create Your Own API?</h3>
-        <ul>
-            <li>✅ Complete control over data</li>
-            <li>✅ Security and privacy</li>
-            <li>✅ Custom business logic</li>
-            <li>✅ Integration with databases</li>
-        </ul>
-
-        <h3>Option A: FastAPI (Recommended)</h3>
-
-        <p><strong>Installation:</strong></p>
-        <pre>pip install fastapi uvicorn</pre>
-
-        <p><strong>Complete News API Clone:</strong></p>
-        <pre>from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List, Optional
-from datetime import datetime
-import uvicorn
-
-app = FastAPI(title="My News API", version="1.0")
-
-# Data model
-class Article(BaseModel):
-    id: int
-    title: str
-    description: str
-    content: str
-    source: str
-    publishedAt: str
-    url: Optional[str] = None
-
-# Sample data
-sample_articles = [
-    {
-        "id": 1,
-        "title": "First News Article",
-        "description": "This is a sample news article description.",
-        "content": "Full content of the first news article...",
-        "source": "My News Source",
-        "publishedAt": datetime.now().isoformat(),
-        "url": "https://example.com/article1"
-    },
-    {
-        "id": 2,
-        "title": "Second News Article",
-        "description": "Another sample news article description.",
-        "content": "Full content of the second news article...",
-        "source": "Another Source",
-        "publishedAt": datetime.now().isoformat(),
-        "url": "https://example.com/article2"
-    }
-]
-
-# GET all articles
-@app.get("/articles", response_model=List[Article])
-async def get_articles():
-    return sample_articles
-
-# GET article by ID
-@app.get("/articles/{article_id}")
-async def get_article(article_id: int):
-    for article in sample_articles:
-        if article["id"] == article_id:
-            return article
-    raise HTTPException(status_code=404, detail="Article not found")
-
-# GET search articles
-@app.get("/search")
-async def search_articles(q: str):
-    results = [a for a in sample_articles if q.lower() in a["title"].lower()]
-    return {"status": "ok", "totalResults": len(results), "articles": results}
-
-# POST create article
-@app.post("/articles", response_model=Article)
-async def create_article(article: Article):
-    new_article = article.dict()
-    new_article["id"] = len(sample_articles) + 1
-    sample_articles.append(new_article)
-    return new_article
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)</pre>
-
-        <p><strong>Run the API:</strong></p>
-        <pre>python app.py</pre>
-
-        <p><strong>Test in Browser:</strong></p>
-        <pre>http://localhost:8000/articles
-http://localhost:8000/articles/1
-http://localhost:8000/search?q=First
-http://localhost:8000/docs  (Interactive documentation)</pre>
-
-        <p><strong>Connect n8n to Your API:</strong></p>
-        <pre>Method: GET
-URL: http://localhost:8000/articles</pre>
-
-        <h3>Option B: Flask (Simpler Alternative)</h3>
-        <pre>from flask import Flask, jsonify, request
-
-app = Flask(__name__)
-
-articles = [
-    {"id": 1, "title": "First Article", "description": "Content..."},
-    {"id": 2, "title": "Second Article", "description": "More content..."}
-]
-
-@app.route('/articles', methods=['GET'])
-def get_articles():
-    return jsonify(articles)
-
-@app.route('/articles/<int:article_id>', methods=['GET'])
-def get_article(article_id):
-    article = next((a for a in articles if a["id"] == article_id), None)
-    if article:
-        return jsonify(article)
-    return jsonify({"error": "Not found"}), 404
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8000)</pre>
-
-        <!-- ============================================================ -->
-        <h2 id="sec8">8. Troubleshooting &amp; Best Practices</h2>
-
-        <h3>Common Issues and Solutions</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>Issue</th><th>Solution</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Split Out not working</strong></td><td>Verify field name: <code>articles</code> for NewsAPI, <code>$json</code> for JSONPlaceholder</td></tr>
-                    <tr><td><strong>IF node type error</strong></td><td>Use <code>={{ $json.body.length }}</code> with "Number >" operation</td></tr>
-                    <tr><td><strong>Email not sending</strong></td><td>Check SMTP settings, use app password for Gmail</td></tr>
-                    <tr><td><strong>API rate limit</strong></td><td>Add delay between requests, use daily schedule</td></tr>
-                    <tr><td><strong>No items in output</strong></td><td>Check filter conditions, test with lower thresholds</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h3>Best Practices</h3>
-
-        <p><strong>1. Test Each Node Individually</strong></p>
-        <ul>
-            <li>Execute HTTP Request alone first</li>
-            <li>Check output at each step</li>
-            <li>Verify data structure</li>
-        </ul>
-
-        <p><strong>2. Handle Empty Results</strong></p>
-        <pre>// Add "No Op" node after IF node's false branch</pre>
-
-        <p><strong>3. Use Environment Variables</strong></p>
-        <pre>Store API keys in $vars or environment variables
-Never hardcode credentials</pre>
-
-        <p><strong>4. Error Handling</strong></p>
-        <pre>// Add Error Trigger node
-{
-  "workflowId": "catch_errors",
-  "error": "any"
-}</pre>
-
-        <p><strong>5. Monitor API Limits</strong></p>
-        <ul>
-            <li>NewsAPI: 100 requests/day</li>
-            <li>Check usage regularly</li>
-            <li>Consider multiple API keys</li>
-        </ul>
-
-        <h3>Quick Reference: Data Structures</h3>
-        <p><strong>JSONPlaceholder:</strong></p>
-        <pre>Output: Direct array
-Split On: $json
-Fields: userId, id, title, body</pre>
-
-        <p><strong>NewsAPI:</strong></p>
-        <pre>Output: Object with articles array
-Split On: articles
-Fields: source, author, title, description, url, content</pre>
-
-        <h3>Summary Table: Two Projects Compared</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>Feature</th><th>JSONPlaceholder Project</th><th>NewsAPI Project</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Purpose</strong></td><td>Practice splitting/filtering</td><td>Real news automation</td></tr>
-                    <tr><td><strong>Data Source</strong></td><td>Fake test data</td><td>Real news articles</td></tr>
-                    <tr><td><strong>Split On</strong></td><td><code>$json</code></td><td><code>articles</code></td></tr>
-                    <tr><td><strong>Filter Field</strong></td><td><code>body</code></td><td><code>description</code></td></tr>
-                    <tr><td><strong>Filter Value</strong></td><td>&gt; 100 characters</td><td>&gt; 100 characters</td></tr>
-                    <tr><td><strong>Output</strong></td><td>Post summaries</td><td>News summaries</td></tr>
-                    <tr><td><strong>API Limit</strong></td><td>Unlimited</td><td>100 requests/day</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <hr style="margin: 2.5rem 0; border: none; border-top: 2px solid #d0d7de;">
-
-        <h3>Key Takeaways</h3>
-        <ol style="font-size: 1.05rem;">
-            <li><strong>Always check API response structure</strong> before configuring nodes</li>
-            <li><strong>Split Out field must match</strong> the array name in response</li>
-            <li><strong>Use Filter Node for simple filtering</strong>, IF Node for complex routing</li>
-            <li><strong>Test incrementally</strong> — validate each node step by step</li>
-            <li><strong>Store API keys securely</strong> in environment variables</li>
-            <li><strong>Respect API rate limits</strong> — schedule workflows appropriately</li>
-        </ol>
-
-        <h3>Practice Exercises</h3>
-        <ol>
-            <li><strong>Beginner:</strong> Modify JSONPlaceholder project to filter by title length</li>
-            <li><strong>Intermediate:</strong> Create a workflow that searches NewsAPI for "technology" news</li>
-            <li><strong>Advanced:</strong> Build a custom API with Python and connect it to n8n</li>
-        </ol>
-
-        <div class="highlight-box" style="margin-top: 2rem;">
-            <p style="margin-bottom: 0;">🚀 <strong>What next?</strong></p>
-        </div>
-
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ---------- Configuration ----------
+            const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook-test/order';
+            const CHECK_INTERVAL = 30000; // Check webhook status every 30s
+
+            // ---------- DOM Elements ----------
+            const form = document.getElementById('orderForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const responseBox = document.getElementById('responseBox');
+            const responseTitle = document.getElementById('responseTitle');
+            const responseMessage = document.getElementById('responseMessage');
+            const responseDetails = document.getElementById('responseDetails');
+            
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const webhookUrlDisplay = document.getElementById('webhookUrlDisplay');
+
+            // ---------- Webhook Status Check ----------
+            async function checkWebhookStatus() {
+                try {
+                    // Try to send a lightweight test request
+                    const response = await fetch(N8N_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ test: true }),
+                        signal: AbortSignal.timeout(2000)
+                    });
+
+                    if (response.status === 405) {
+                        statusDot.className = 'dot offline';
+                        statusText.textContent = '⚠️ Method not allowed (use POST in n8n)';
+                    } else if (response.status === 404) {
+                        statusDot.className = 'dot offline';
+                        statusText.textContent = '❌ Webhook not found (check URL)';
+                    } else {
+                        statusDot.className = 'dot online';
+                        statusText.textContent = '✅ Connected to n8n';
+                    }
+                } catch (error) {
+                    statusDot.className = 'dot offline';
+                    statusText.textContent = '⚠️ n8n not running (start with: n8n start)';
+                    console.warn('Webhook status check:', error.message);
+                }
+            }
+
+            // Check status on load and periodically
+            checkWebhookStatus();
+            setInterval(checkWebhookStatus, CHECK_INTERVAL);
+
+            // ---------- Form Submission ----------
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Get form values
+                const orderId = document.getElementById('orderId').value.trim();
+                const customerName = document.getElementById('customerName').value.trim();
+                const totalAmount = parseFloat(document.getElementById('totalAmount').value);
+                const shippingMethod = document.getElementById('shippingMethod').value;
+                const country = document.getElementById('country').value;
+                const city = document.getElementById('city').value.trim() || 'Unknown';
+
+                // Validate
+                if (!orderId || !customerName || !totalAmount || !country) {
+                    showResponse('error', 'Missing Fields', 'Please fill in all required fields.');
+                    return;
+                }
+
+                // Build payload
+                const payload = {
+                    orderId: orderId,
+                    customerName: customerName,
+                    totalAmount: totalAmount,
+                    shippingAddress: {
+                        country: country,
+                        city: city
+                    },
+                    shippingMethod: shippingMethod
+                };
+
+                // Show loading state
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+                responseBox.className = 'response-box';
+                responseBox.style.display = 'none';
+
+                try {
+                    // Send to n8n webhook
+                    const response = await fetch(N8N_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    // Parse response
+                    let data;
+                    try {
+                        data = await response.json();
+                    } catch {
+                        data = { message: response.statusText || 'No response body' };
+                    }
+
+                    if (response.ok) {
+                        showResponse(
+                            'success',
+                            '✅ Order Sent Successfully!',
+                            `Order ${orderId} has been sent to the fulfillment workflow.`,
+                            data
+                        );
+                        // Reset form (optional)
+                        // document.getElementById('orderId').value = 'ORD-' + String(Math.floor(Math.random() * 90000 + 10000));
+                    } else {
+                        let errorMsg = `Status ${response.status}`;
+                        if (data.message) errorMsg += `: ${data.message}`;
+                        if (data.error) errorMsg += ` - ${data.error}`;
+                        showResponse('error', '❌ Failed to Send Order', errorMsg, data);
+                    }
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    
+                    let errorMessage = 'Failed to connect to n8n webhook.';
+                    if (error.message.includes('Failed to fetch')) {
+                        errorMessage = 'Cannot connect to n8n. Make sure n8n is running (n8n start) and the webhook is configured.';
+                    } else if (error.message.includes('405')) {
+                        errorMessage = 'Method not allowed. Set n8n webhook to POST method.';
+                    } else if (error.message.includes('404')) {
+                        errorMessage = 'Webhook not found. Check the URL in n8n.';
+                    }
+                    
+                    showResponse('error', '❌ Connection Error', errorMessage);
+                } finally {
+                    // Remove loading state
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // ---------- Response Helper ----------
+            function showResponse(type, title, message, data = null) {
+                responseBox.className = 'response-box ' + type;
+                responseBox.style.display = 'block';
+                responseTitle.textContent = title;
+                responseMessage.textContent = message;
+
+                if (data) {
+                    responseDetails.textContent = JSON.stringify(data, null, 2);
+                    responseDetails.style.display = 'block';
+                } else {
+                    responseDetails.style.display = 'none';
+                }
+
+                // Auto-hide after 10 seconds on success
+                if (type === 'success') {
+                    setTimeout(() => {
+                        responseBox.style.opacity = '0.6';
+                        setTimeout(() => {
+                            responseBox.style.opacity = '1';
+                        }, 500);
+                    }, 8000);
+                }
+
+                // Scroll to response
+                responseBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // ---------- Auto-generate Order ID (optional) ----------
+            const orderIdInput = document.getElementById('orderId');
+            orderIdInput.addEventListener('focus', function() {
+                if (this.value === '') {
+                    this.value = 'ORD-' + String(Math.floor(Math.random() * 90000 + 10000));
+                }
+            });
+
+            // ---------- Keyboard shortcut: Ctrl+Enter to submit ----------
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    if (document.activeElement.tagName !== 'BUTTON') {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                }
+            });
+
+            console.log('📦 Order Fulfillment System ready');
+            console.log(`🔗 Webhook URL: ${N8N_WEBHOOK_URL}`);
+        });
+    </script>
 </body>
 </html>
