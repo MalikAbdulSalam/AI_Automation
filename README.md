@@ -363,4 +363,7 @@ Frontend for this project
 
 ![facebook post generation ](images/facebook_post_generation_front_end.png)
 
+## Customer support system workflow 
+workflow to handle customers to resolve their problems via assigning concern technincal team 
 
+![customer support system ](images/customer_support_system.png)
