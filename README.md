@@ -11,7 +11,7 @@
 
 [Lecture 4 : Use of if and switch statement ](https://malikabdulsalam.github.io/AI_Automation/5-use_of_if_switch_gmail.html)
 
-[Lecture 4 : http node and API calling](https://malikabdulsalam.github.io/AI_Automation/6-shimpment_handling.html)
+[Lecture 4 : http node and API calling](https://malikabdulsalam.github.io/AI_Automation/6-use_of_http-node.html)
 
 
 [Lecture 5 : list of free APIs](https://malikabdulsalam.github.io/AI_Automation/9-free_api_ursl.html)
