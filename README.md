@@ -16,7 +16,7 @@
 
 [Lecture 5 : list of free APIs](https://malikabdulsalam.github.io/AI_Automation/9-free_api_ursl.html)
 
-[Lecture 6 : list of free APIs](https://malikabdulsalam.github.io/AI_Automation/8-read_email_send_message.html)
+[Lecture 6 : Read files from Local machine(https://malikabdulsalam.github.io/AI_Automation/8-read_email_send_message.html)
 
 
 
