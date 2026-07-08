@@ -461,6 +461,13 @@
 
             <h4>Read File Nodes</h4>
             <div class="code-block">
+                <span class="comment">add your file at the location where n8n can see files</span><br>
+                <span class="comment">docker cp /home/bismillah/projects/n8n/data.ods n8n-main:/home/node/.n8n-files/data.ods</span><br>
+                
+                <span class="comment">.</span><br>
+                
+                <span class="comment">After each edit in file, replace the file in location n8n see the file</span><br>                
+                <span class="comment">docker cp /home/bismillah/projects/n8n/data.ods n8n-main:/home/node/.n8n-files/data.ods</span><br>
                 <span class="comment">// Read_email (ODS)</span><br>
                 File Selector: <span class="string">"/home/node/.n8n-files/data.ods"</span><br>
                 <br>
