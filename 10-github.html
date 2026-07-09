@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Complete Git & GitHub Tutorial (Windows)</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:#f4f6f9;
+    color:#333;
+    line-height:1.8;
+}
+
+header{
+    background:#24292e;
+    color:white;
+    padding:30px;
+    text-align:center;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.section{
+    background:white;
+    margin:20px 0;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+h1,h2,h3{
+    color:#24292e;
+    margin-bottom:15px;
+}
+
+header h1{
+    color:white;
+}
+
+p{
+    margin-bottom:10px;
+}
+
+ul{
+    margin-left:25px;
+    margin-bottom:15px;
+}
+
+pre{
+    background:#272822;
+    color:#00ff90;
+    padding:15px;
+    border-radius:8px;
+    overflow:auto;
+}
+
+code{
+    font-family:Consolas;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table th{
+    background:#24292e;
+    color:white;
+    padding:12px;
+}
+
+table td{
+    border:1px solid #ddd;
+    padding:12px;
+}
+
+.step{
+    background:#007acc;
+    color:white;
+    display:inline-block;
+    padding:5px 15px;
+    border-radius:20px;
+    margin-bottom:15px;
+}
+
+.note{
+    background:#fff3cd;
+    border-left:6px solid orange;
+    padding:15px;
+    margin-top:15px;
+}
+
+.success{
+    background:#d4edda;
+    border-left:6px solid green;
+    padding:15px;
+    margin-top:15px;
+}
+
+.exercise{
+    background:#eef7ff;
+    border-left:6px solid #007bff;
+    padding:15px;
+    margin-top:20px;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    background:#24292e;
+    color:white;
+    margin-top:40px;
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+
+<h1>Complete Git & GitHub Tutorial</h1>
+
+<p>Windows Beginner Guide</p>
+
+</header>
+
+<div class="container">
+
+<div class="section">
+
+<h2>What is Git?</h2>
+
+<p>
+
+Git is a Version Control System (VCS). It keeps track of changes made in your project files.
+
+</p>
+
+<ul>
+
+<li>Stores project history</li>
+
+<li>Allows multiple developers to work together</li>
+
+<li>Restore previous versions</li>
+
+<li>Manage project branches</li>
+
+</ul>
+
+</div>
+
+<div class="section">
+
+<h2>What is GitHub?</h2>
+
+<p>
+
+GitHub is a cloud platform where Git repositories are stored online.
+
+</p>
+
+<ul>
+
+<li>Store source code</li>
+
+<li>Backup projects</li>
+
+<li>Collaborate with teams</li>
+
+<li>Open-source development</li>
+
+<li>Portfolio for developers</li>
+
+</ul>
+
+</div>
+
+<div class="section">
+
+<h2>Git vs GitHub</h2>
+
+<table>
+
+<tr>
+
+<th>Git</th>
+
+<th>GitHub</th>
+
+</tr>
+
+<tr>
+
+<td>Version Control Software</td>
+
+<td>Cloud Hosting Platform</td>
+
+</tr>
+
+<tr>
+
+<td>Works Offline</td>
+
+<td>Requires Internet</td>
+
+</tr>
+
+<tr>
+
+<td>Tracks Changes</td>
+
+<td>Stores Repositories</td>
+
+</tr>
+
+<tr>
+
+<td>Installed on PC</td>
+
+<td>Website</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 1</span>
+
+<h2>Create GitHub Account</h2>
+
+<ol>
+
+<li>Visit https://github.com</li>
+
+<li>Click Sign Up</li>
+
+<li>Create account</li>
+
+<li>Verify email</li>
+
+</ol>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 2</span>
+
+<h2>Download Git</h2>
+
+<p>
+
+Download Git from:
+
+</p>
+
+<pre><code>https://git-scm.com/downloads</code></pre>
+
+<p>
+
+Install using default settings.
+
+</p>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 3</span>
+
+<h2>Verify Installation</h2>
+
+<pre><code>git --version</code></pre>
+
+Expected output:
+
+<pre><code>git version 2.x.x.windows</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 4</span>
+
+<h2>Configure Git</h2>
+
+<pre><code>git config --global user.name "Your Name"
+
+git config --global user.email "your@email.com"
+
+git config --list
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 5</span>
+
+<h2>Create GitHub Repository</h2>
+
+<ul>
+
+<li>Login to GitHub</li>
+
+<li>Click + icon</li>
+
+<li>New Repository</li>
+
+<li>Name: MyProject</li>
+
+<li>Public or Private</li>
+
+<li>Create Repository</li>
+
+</ul>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 6</span>
+
+<h2>Create Local Project</h2>
+
+<pre><code>cd Desktop
+
+mkdir MyProject
+
+cd MyProject
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 7</span>
+
+<h2>Initialize Git Repository</h2>
+
+<pre><code>git init</code></pre>
+
+Output:
+
+<pre><code>Initialized empty Git repository</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 8</span>
+
+<h2>Create README File</h2>
+
+<pre><code># My First GitHub Project
+
+Hello GitHub!</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 9</span>
+
+<h2>Check Status</h2>
+
+<pre><code>git status</code></pre>
+
+Output:
+
+<pre><code>Untracked files:
+README.md</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 10</span>
+
+<h2>Add Files</h2>
+
+<pre><code>git add README.md
+
+OR
+
+git add .
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 11</span>
+
+<h2>Commit Files</h2>
+
+<pre><code>git commit -m "First Commit"</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 12</span>
+
+<h2>Connect Local Repository to GitHub</h2>
+
+<pre><code>git remote add origin https://github.com/username/MyProject.git
+
+git remote -v
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 13</span>
+
+<h2>Push Code to GitHub</h2>
+
+<pre><code>git branch -M main
+
+git push -u origin main
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 14</span>
+
+<h2>Modify Project</h2>
+
+<pre><code>git status</code></pre>
+
+Edit your files.
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 15</span>
+
+<h2>Stage Changes</h2>
+
+<pre><code>git add .</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 16</span>
+
+<h2>Commit Changes</h2>
+
+<pre><code>git commit -m "Updated project"</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 17</span>
+
+<h2>Push Again</h2>
+
+<pre><code>git push</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 18</span>
+
+<h2>Clone Repository</h2>
+
+<pre><code>git clone https://github.com/username/project.git</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 19</span>
+
+<h2>Pull Latest Changes</h2>
+
+<pre><code>git pull</code></pre>
+
+</div>
+
+<div class="section">
+
+<span class="step">Step 20</span>
+
+<h2>View Commit History</h2>
+
+<pre><code>git log
+
+git log --oneline
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<h2>Branch Commands</h2>
+
+<pre><code>git branch
+
+git branch feature1
+
+git checkout feature1
+
+git checkout -b feature2
+
+git merge feature1
+
+git branch -d feature1
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<h2>Undo Commands</h2>
+
+<pre><code>git restore filename
+
+git restore .
+
+git reset HEAD filename
+
+git reset --hard HEAD
+</code></pre>
+
+<div class="note">
+
+<b>Warning:</b>
+
+git reset --hard permanently removes uncommitted changes.
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Useful Git Commands</h2>
+
+<table>
+
+<tr>
+
+<th>Command</th>
+
+<th>Description</th>
+
+</tr>
+
+<tr>
+
+<td>git init</td>
+
+<td>Create repository</td>
+
+</tr>
+
+<tr>
+
+<td>git clone</td>
+
+<td>Download repository</td>
+
+</tr>
+
+<tr>
+
+<td>git status</td>
+
+<td>Check status</td>
+
+</tr>
+
+<tr>
+
+<td>git add .</td>
+
+<td>Add all files</td>
+
+</tr>
+
+<tr>
+
+<td>git commit</td>
+
+<td>Save changes</td>
+
+</tr>
+
+<tr>
+
+<td>git push</td>
+
+<td>Upload changes</td>
+
+</tr>
+
+<tr>
+
+<td>git pull</td>
+
+<td>Download latest changes</td>
+
+</tr>
+
+<tr>
+
+<td>git branch</td>
+
+<td>List branches</td>
+
+</tr>
+
+<tr>
+
+<td>git checkout</td>
+
+<td>Switch branch</td>
+
+</tr>
+
+<tr>
+
+<td>git merge</td>
+
+<td>Merge branches</td>
+
+</tr>
+
+<tr>
+
+<td>git log</td>
+
+<td>View history</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>Daily Git Workflow</h2>
+
+<pre><code>git pull
+
+git status
+
+git add .
+
+git commit -m "Describe your work"
+
+git push
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<h2>Typical Project Structure</h2>
+
+<pre><code>MyProject/
+
+│
+
+├── README.md
+
+├── app.py
+
+├── requirements.txt
+
+├── static/
+
+├── templates/
+
+└── images/
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<h2>Common Errors</h2>
+
+<table>
+
+<tr>
+
+<th>Error</th>
+
+<th>Solution</th>
+
+</tr>
+
+<tr>
+
+<td>git not recognized</td>
+
+<td>Install Git and restart terminal</td>
+
+</tr>
+
+<tr>
+
+<td>Permission denied</td>
+
+<td>Login to GitHub again</td>
+
+</tr>
+
+<tr>
+
+<td>Repository not found</td>
+
+<td>Check repository URL</td>
+
+</tr>
+
+<tr>
+
+<td>Nothing to commit</td>
+
+<td>No changes detected</td>
+
+</tr>
+
+<tr>
+
+<td>Merge conflict</td>
+
+<td>Resolve conflict manually</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>Practice Exercise</h2>
+
+<div class="exercise">
+
+<h3>Exercise 1</h3>
+
+<ol>
+
+<li>Create a GitHub account.</li>
+
+<li>Install Git.</li>
+
+<li>Create a folder named StudentProject.</li>
+
+<li>Initialize Git.</li>
+
+<li>Create README.md.</li>
+
+<li>Commit the file.</li>
+
+<li>Create a GitHub repository.</li>
+
+<li>Push the project.</li>
+
+<li>Edit README.md.</li>
+
+<li>Commit and Push again.</li>
+
+</ol>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Git Workflow Diagram</h2>
+
+<pre><code>
+
+Working Directory
+       │
+       ▼
+ git add
+       │
+       ▼
+Staging Area
+       │
+       ▼
+ git commit
+       │
+       ▼
+ Local Repository
+       │
+       ▼
+ git push
+       │
+       ▼
+ GitHub Repository
+
+</code></pre>
+
+</div>
+
+<div class="section">
+
+<h2>Summary</h2>
+
+<div class="success">
+
+✔ Git tracks project history.<br>
+
+✔ GitHub stores repositories online.<br>
+
+✔ Commit frequently.<br>
+
+✔ Push your code regularly.<br>
+
+✔ Pull before starting new work.<br>
+
+✔ Use branches for new features.<br>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+<h3>Complete Git & GitHub Tutorial</h3>
+
+<p>Designed for Windows Beginners</p>
+
+</footer>
+
+</body>
+</html>
