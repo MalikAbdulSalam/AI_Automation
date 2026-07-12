@@ -16,11 +16,11 @@
 
 [Lecture 5 : list of free APIs](https://malikabdulsalam.github.io/AI_Automation/9-free_api_ursl.html)
 
-[Lecture 6 : Read files from Local machine](https://malikabdulsalam.github.io/AI_Automation/8-read_email_send_message.html)
+[Lecture 7 : Read files from Local machine](https://malikabdulsalam.github.io/AI_Automation/8-read_email_send_message.html)
 
-[Lecture 6 : Read files from Local machine](https://malikabdulsalam.github.io/AI_Automation/10-github.html)
+[Lecture 8 : Read files from Local machine](https://malikabdulsalam.github.io/AI_Automation/10-github.html)
 
-[Lecture 6 : Read files from Local machine](https://malikabdulsalam.github.io/AI_Automation/11-free_api_ursl.html)
+[Lecture 9 : Error Handling of HTTP node](https://malikabdulsalam.github.io/AI_Automation/11-free_api_ursl.html)
 
 
 
