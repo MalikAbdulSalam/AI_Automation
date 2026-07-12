@@ -1,0 +1,114 @@
+{
+  "name": "https_faild_handlling",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://newsapi.org/v2/top-headlines?countrykk=us&apiKey=2a847d8544e34cb4a59b113ea96b5d5c",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -16,
+        -16
+      ],
+      "id": "1b1a009d-3548-49dd-ba46-7284915b45ba",
+      "name": "HTTP Request",
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        -16
+      ],
+      "id": "efea6d05-74dc-4a23-a9d4-b4b9d9ec6a4b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "34d3425d-c6f3-4fc8-9a50-bf989ed13995",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "ok",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "90e58c9a-b7b1-4fcc-8d6c-d57474566723",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "0d5d2aaa-cecc-4a71-ae52-69b2658d7b9f",
+  "meta": {
+    "instanceId": "e765180d9b22a1f5f25394fdb4e07a973c0ec02bdf1d39601ac41e58928cf034"
+  },
+  "nodeGroups": [],
+  "id": "6nc3IRN6WcDK5k6F",
+  "tags": []
+}
