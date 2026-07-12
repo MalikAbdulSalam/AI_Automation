@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>n8n Retry Failed API Requests - Complete Tutorial</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:#f4f6f9;
+    color:#333;
+    line-height:1.8;
+    padding:30px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    background:#fff;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h1,h2,h3{
+    color:#1565C0;
+    margin-top:25px;
+    margin-bottom:10px;
+}
+
+p{
+    margin-bottom:15px;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    border-radius:8px;
+    overflow:auto;
+    margin:15px 0;
+}
+
+code{
+    color:#FFD54F;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+table th,table td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:left;
+}
+
+table th{
+    background:#1976D2;
+    color:white;
+}
+
+.note{
+    background:#FFF8E1;
+    border-left:6px solid orange;
+    padding:15px;
+    margin:20px 0;
+}
+
+.success{
+    background:#E8F5E9;
+    border-left:6px solid green;
+    padding:15px;
+    margin:20px 0;
+}
+
+.warning{
+    background:#FFEBEE;
+    border-left:6px solid red;
+    padding:15px;
+    margin:20px 0;
+}
+
+.flow{
+    background:#eef6ff;
+    padding:20px;
+    border-radius:8px;
+    font-family:Consolas,monospace;
+    white-space:pre;
+    overflow:auto;
+}
+
+.step{
+    background:#F5F5F5;
+    padding:15px;
+    border-radius:8px;
+    margin:15px 0;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Retry Failed API Requests in n8n</h1>
+
+<p>
+This tutorial teaches students how to retry an API request automatically if it fails.
+Retrying failed requests makes workflows more reliable and is a common practice in production systems.
+</p>
+
+<hr>
+
+<h2>Learning Objectives</h2>
+
+<ul>
+<li>Understand why API requests fail.</li>
+<li>Use the built-in Retry on Fail feature.</li>
+<li>Create a manual retry workflow.</li>
+<li>Use the Wait node.</li>
+<li>Handle API failures gracefully.</li>
+</ul>
+
+<hr>
+
+<h2>Why Do APIs Fail?</h2>
+
+<table>
+<tr>
+<th>Reason</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>Server Error</td>
+<td>500 Internal Server Error</td>
+</tr>
+
+<tr>
+<td>Rate Limit</td>
+<td>429 Too Many Requests</td>
+</tr>
+
+<tr>
+<td>Timeout</td>
+<td>Request Timed Out</td>
+</tr>
+
+<tr>
+<td>Temporary Network Error</td>
+<td>Connection Lost</td>
+</tr>
+
+</table>
+
+<div class="note">
+Instead of immediately stopping the workflow, we can retry the request.
+</div>
+
+<hr>
+
+<h2>Method 1 — Built-in Retry (Recommended)</h2>
+
+<h3>Workflow</h3>
+
+<div class="flow">
+Schedule Trigger
+      │
+      ▼
+HTTP Request
+      │
+      ▼
+Continue Workflow
+</div>
+
+<h3>Steps</h3>
+
+<div class="step">
+
+<b>Step 1</b>
+
+<ol>
+<li>Add a <b>Schedule Trigger</b>.</li>
+<li>Add an <b>HTTP Request</b> node.</li>
+<li>Open the HTTP Request node.</li>
+<li>Go to <b>Settings</b>.</li>
+<li>Enable <b>Retry On Fail</b>.</li>
+<li>Set:</li>
+</ol>
+
+<pre>
+Max Tries = 3
+
+Wait Between Tries = 5000 ms
+</pre>
+
+</div>
+
+<h3>Execution</h3>
+
+<div class="flow">
+Attempt 1
+
+HTTP Request
+
+```
+  │
+```
+
+Success?
+
+┌────────────┐
+│            │
+│Yes         │No
+▼            ▼
+
+Continue   Wait 5 Seconds
+
+```
+            │
+
+            ▼
+
+       Attempt 2
+
+            │
+
+      Success?
+
+      │        │
+
+     Yes      No
+
+      │        │
+
+      ▼        ▼
+
+ Continue   Wait 5 Seconds
+
+                 │
+
+                 ▼
+
+            Attempt 3
+
+                 │
+
+           Success?
+
+             │
+
+        Yes      No
+
+         │        │
+
+         ▼        ▼
+
+    Continue   Workflow Failed
+```
+
+</div>
+
+<div class="success">
+This method is the easiest and should be taught first.
+</div>
+
+<hr>
+
+<h2>Method 2 — Manual Retry Workflow</h2>
+
+<h3>Workflow Diagram</h3>
+
+<div class="flow">
+Schedule Trigger
+        │
+        ▼
+HTTP Request
+        │
+        ▼
+        IF
+     ┌──┴───────┐
+     │          │
+ Success     Failure
+     │          │
+     ▼          ▼
+ Continue     Wait 5 Seconds
+                 │
+                 ▼
+          HTTP Request Retry
+                 │
+                 ▼
+                IF
+</div>
+
+<hr>
+
+<h2>Step 1</h2>
+
+<p>Add a Schedule Trigger.</p>
+
+<hr>
+
+<h2>Step 2</h2>
+
+<p>Add an HTTP Request node.</p>
+
+<p>Inside Settings enable</p>
+
+<pre>
+Continue On Fail = TRUE
+</pre>
+
+<p>This prevents the workflow from stopping.</p>
+
+<hr>
+
+<h2>Step 3</h2>
+
+<p>Add an IF node.</p>
+
+<p>Check whether the API returned an error.</p>
+
+Example Expression
+
+<pre>
+{{$json.error}}
+</pre>
+
+or
+
+<pre>
+{{$json.statusCode >= 400}}
+</pre>
+
+<hr>
+
+<h2>Step 4</h2>
+
+<p>If API Failed</p>
+
+Add a Wait node.
+
+Configure
+
+<pre>
+Wait = 5 Seconds
+</pre>
+
+<hr>
+
+<h2>Step 5</h2>
+
+After Wait
+
+Add another HTTP Request node.
+
+Use exactly the same API settings.
+
+<hr>
+
+<h2>Complete Workflow</h2>
+
+<div class="flow">
+Schedule Trigger
+       │
+       ▼
+HTTP Request #1
+       │
+       ▼
+      IF
+   ┌───┴────┐
+Success   Failed
+   │         │
+   │      Wait 5 sec
+   │         │
+   │         ▼
+   │   HTTP Request #2
+   │         │
+   │         ▼
+   │        IF
+   │     ┌──┴──┐
+   │  Success Failed
+   │      │      │
+   │      │   Wait 5 sec
+   │      │      │
+   │      │      ▼
+   │      │ HTTP Request #3
+   │      │
+   └──────┴────────► Continue
+</div>
+
+<hr>
+
+<h2>Real-Life Example</h2>
+
+Suppose we call
+
+<pre>
+https://api.openweathermap.org/
+</pre>
+
+Sometimes the API may return
+
+<pre>
+429 Too Many Requests
+</pre>
+
+Instead of stopping
+
+Wait
+
+Retry
+
+Continue automatically.
+
+<hr>
+
+<h2>Best Practices</h2>
+
+<table>
+
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+
+<tr>
+<td>Retry temporary failures.</td>
+<td>Retry invalid credentials.</td>
+</tr>
+
+<tr>
+<td>Retry server errors.</td>
+<td>Retry bad requests (400).</td>
+</tr>
+
+<tr>
+<td>Use a Wait node between retries.</td>
+<td>Retry endlessly.</td>
+</tr>
+
+<tr>
+<td>Limit retries (3–5).</td>
+<td>Use 100 retries.</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Classroom Exercise</h2>
+
+<h3>Task</h3>
+
+Build a workflow that:
+
+<ol>
+
+<li>Runs every minute.</li>
+
+<li>Calls a public API.</li>
+
+<li>If successful, save the response to Google Sheets.</li>
+
+<li>If failed, wait 5 seconds.</li>
+
+<li>Retry up to 3 times.</li>
+
+<li>If all retries fail, send yourself a Gmail notification.</li>
+
+</ol>
+
+<hr>
+
+<h2>Homework</h2>
+
+Create a workflow that:
+
+<ul>
+
+<li>Reads URLs from Google Sheets.</li>
+
+<li>Calls each API.</li>
+
+<li>Retries failed requests three times.</li>
+
+<li>Stores successful responses.</li>
+
+<li>Sends an email listing any URLs that still failed after all retries.</li>
+
+</ul>
+
+<hr>
+
+<h2>Summary</h2>
+
+<ul>
+
+<li>Retry makes workflows reliable.</li>
+
+<li>Use the built-in Retry On Fail whenever possible.</li>
+
+<li>Manual retries help understand workflow logic.</li>
+
+<li>Always include a delay between retries.</li>
+
+<li>Avoid retrying permanent errors such as 400 or 401.</li>
+
+</ul>
+
+</div>
+
+</body>
+</html>
+
