@@ -20,6 +20,7 @@
 
 [Lecture 6 : Read files from Local machine](https://malikabdulsalam.github.io/AI_Automation/10-github.html)
 
+[Lecture 6 : Read files from Local machine](https://malikabdulsalam.github.io/AI_Automation/11-free_api_ursl.html)
 
 
 
