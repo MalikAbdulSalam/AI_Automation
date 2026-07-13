@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n OCR Workflow Demo - HTTP Request Node</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .workflow-visual {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .workflow-node {
+            background: white;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: #2d3748;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .workflow-node .icon {
+            font-size: 20px;
+        }
+
+        .workflow-node.trigger {
+            border-color: #FF6B6B;
+        }
+
+        .workflow-node.read {
+            border-color: #4ECDC4;
+        }
+
+        .workflow-node.http {
+            border-color: #45B7D1;
+        }
+
+        .workflow-node.output {
+            border-color: #96CEB4;
+        }
+
+        .arrow {
+            font-size: 24px;
+            color: #adb5bd;
+        }
+
+        .section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .badge {
+            background: #4CAF50;
+            color: white;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+
+        .section-title .badge.trigger {
+            background: #FF6B6B;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .code-block .highlight {
+            color: #ce9178;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .number {
+            color: #b5cea8;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            display: none;
+            min-height: 100px;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box.success {
+            border-color: #4CAF50;
+            background: #f0fff4;
+        }
+
+        .result-box.error {
+            border-color: #FF6B6B;
+            background: #fff5f5;
+        }
+
+        .result-box .result-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .result-box .result-content {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .api-config {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .api-config strong {
+            color: #856404;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-indicator.idle {
+            background: #adb5bd;
+        }
+
+        .status-indicator.running {
+            background: #ffc107;
+            animation: pulse 1s infinite;
+        }
+
+        .status-indicator.success {
+            background: #4CAF50;
+        }
+
+        .status-indicator.error {
+            background: #FF6B6B;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .flex-row .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-btn {
+            background: #e2e8f0;
+            color: #2d3748;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            transition: background 0.3s;
+            border: 2px dashed #cbd5e0;
+        }
+
+        .file-upload-btn:hover {
+            background: #cbd5e0;
+        }
+
+        .file-name {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #718096;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .workflow-node {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            
+            .arrow {
+                font-size: 18px;
+            }
+            
+            .code-block {
+                font-size: 11px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1>
+            📄 n8n OCR Workflow
+            <span style="font-size: 14px; color: #666; font-weight: normal; margin-left: 10px;">
+                HTTP Request Node Demo
+            </span>
+        </h1>
+        <p class="subtitle">Complete workflow for extracting text from images using OCR.space API</p>
+
+        <!-- Workflow Visualization -->
+        <div class="workflow-visual">
+            <div class="workflow-node trigger">
+                <span class="icon">⚡</span> Manual Trigger
+            </div>
+            <span class="arrow">→</span>
+            <div class="workflow-node read">
+                <span class="icon">📁</span> Read Binary Files
+            </div>
+            <span class="arrow">→</span>
+            <div class="workflow-node http">
+                <span class="icon">🌐</span> HTTP Request (OCR.space)
+            </div>
+            <span class="arrow">→</span>
+            <div class="workflow-node output">
+                <span class="icon">📝</span> Extracted Text
+            </div>
+        </div>
+
+        <!-- API Configuration Info -->
+        <div class="api-config">
+            <strong>ℹ️ API Configuration:</strong> This workflow uses the OCR.space API. Get your free API key at 
+            <a href="https://ocr.space/ocrapi" target="_blank">ocr.space/ocrapi</a>
+        </div>
+
+        <!-- HTTP Request Node Configuration -->
+        <div class="section">
+            <div class="section-title">
+                🌐 HTTP Request Node Configuration
+                <span class="badge">POST Request</span>
+            </div>
+            
+            <div class="code-block">
+                <span class="comment">// HTTP Request Node Settings</span>
+                <span class="keyword">Method</span>: <span class="string">POST</span>
+                <span class="keyword">URL</span>: <span class="string">https://api.ocr.space/parse/image</span>
+                <span class="keyword">Response Format</span>: <span class="string">JSON</span>
+                
+                <span class="comment">// Body Parameters (Form-Data)</span>
+                <span class="keyword">apikey</span>: <span class="string">YOUR_API_KEY_HERE</span>
+                <span class="keyword">file</span>: <span class="string">[Binary Data: data]</span>  <span class="comment">// From Read Binary Files node</span>
+                <span class="keyword">language</span>: <span class="string">eng</span>
+                <span class="keyword">isOverlayRequired</span>: <span class="string">false</span>
+                <span class="keyword">OCREngine</span>: <span class="string">2</span>
+            </div>
+        </div>
+
+        <!-- File Upload & Processing -->
+        <div class="section">
+            <div class="section-title">
+                📤 Upload & Process Document
+                <span id="statusBadge" class="badge trigger">Ready</span>
+            </div>
+
+            <div class="flex-row">
+                <div class="input-group" style="flex: 2;">
+                    <label>📎 Select Image or PDF</label>
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-btn" id="fileUploadBtn">
+                            📂 Choose File
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*,.pdf">
+                    </div>
+                    <div class="file-name" id="fileName">No file selected</div>
+                </div>
+
+                <div class="input-group" style="flex: 1;">
+                    <label>🌍 Language</label>
+                    <select id="languageSelect">
+                        <option value="eng">English</option>
+                        <option value="fra">French</option>
+                        <option value="deu">German</option>
+                        <option value="spa">Spanish</option>
+                        <option value="ita">Italian</option>
+                        <option value="por">Portuguese</option>
+                        <option value="jpn">Japanese</option>
+                        <option value="kor">Korean</option>
+                        <option value="chi_sim">Chinese (Simplified)</option>
+                        <option value="ara">Arabic</option>
+                        <option value="rus">Russian</option>
+                        <option value="hin">Hindi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-top: 15px;">
+                <label>🔑 OCR.space API Key</label>
+                <input type="password" id="apiKeyInput" placeholder="Enter your OCR.space API key" value="helloworld">
+                <small style="color: #718096; display: block; margin-top: 5px;">
+                    Get a free API key at <a href="https://ocr.space/ocrapi" target="_blank">ocr.space/ocrapi</a> (Free tier: 250 requests/month)
+                </small>
+            </div>
+
+            <button class="btn" id="processBtn" disabled>
+                🚀 Process with OCR
+            </button>
+
+            <!-- Status Indicator -->
+            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+                <span class="status-indicator idle" id="statusIndicator"></span>
+                <span id="statusText" style="color: #718096; font-size: 14px;">Ready to process</span>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="result-box" id="resultBox">
+            <div class="result-title" id="resultTitle">📝 Extracted Text</div>
+            <div class="result-content" id="resultContent">Loading...</div>
+        </div>
+
+        <!-- Sample Response Structure -->
+        <div class="section" style="margin-top: 20px;">
+            <div class="section-title">
+                📋 API Response Structure
+                <span class="badge">Reference</span>
+            </div>
+            
+            <div class="code-block">
+                <span class="comment">// OCR.space API Response</span>
+                {
+                    <span class="string">"ParsedResults"</span>: [
+                        {
+                            <span class="string">"TextOverlay"</span>: { ... },
+                            <span class="string">"FileParseExitCode"</span>: <span class="number">1</span>,
+                            <span class="string">"ParsedText"</span>: <span class="string">"Extracted text from image..."</span>,
+                            <span class="string">"ErrorMessage"</span>: <span class="string">""</span>,
+                            <span class="string">"ErrorDetails"</span>: <span class="string">""</span>
+                        }
+                    ],
+                    <span class="string">"OCRExitCode"</span>: <span class="number">1</span>,
+                    <span class="string">"IsErroredOnProcessing"</span>: <span class="keyword">false</span>,
+                    <span class="string">"ErrorMessage"</span>: <span class="string">""</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+        const fileUploadBtn = document.getElementById('fileUploadBtn');
+        const processBtn = document.getElementById('processBtn');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const languageSelect = document.getElementById('languageSelect');
+        const resultBox = document.getElementById('resultBox');
+        const resultContent = document.getElementById('resultContent');
+        const resultTitle = document.getElementById('resultTitle');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusText = document.getElementById('statusText');
+        const statusBadge = document.getElementById('statusBadge');
+
+        let selectedFile = null;
+
+        // File selection handler
+        fileInput.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                selectedFile = this.files[0];
+                fileName.textContent = `📄 ${selectedFile.name} (${(selectedFile.size / 1024).toFixed(1)} KB)`;
+                processBtn.disabled = false;
+                fileUploadBtn.textContent = '📂 File Selected';
+                fileUploadBtn.style.background = '#d4edda';
+                fileUploadBtn.style.borderColor = '#4CAF50';
+                
+                // Update status
+                updateStatus('idle', 'File ready for processing');
+            } else {
+                selectedFile = null;
+                fileName.textContent = 'No file selected';
+                processBtn.disabled = true;
+                fileUploadBtn.textContent = '📂 Choose File';
+                fileUploadBtn.style.background = '#e2e8f0';
+                fileUploadBtn.style.borderColor = '#cbd5e0';
+            }
+        });
+
+        // Process button handler
+        processBtn.addEventListener('click', async function() {
+            if (!selectedFile) {
+                alert('Please select a file first!');
+                return;
+            }
+
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                alert('Please enter your OCR.space API key!');
+                return;
+            }
+
+            // Disable button and update status
+            processBtn.disabled = true;
+            processBtn.textContent = '⏳ Processing...';
+            updateStatus('running', 'Processing image with OCR...');
+            resultBox.className = 'result-box';
+
+            try {
+                // Read file as base64
+                const base64Data = await readFileAsBase64(selectedFile);
+                
+                // Prepare form data for OCR.space API
+                const formData = new FormData();
+                formData.append('apikey', apiKey);
+                formData.append('file', selectedFile);
+                formData.append('language', languageSelect.value);
+                formData.append('isOverlayRequired', 'false');
+                formData.append('OCREngine', '2');
+
+                // Make the API request
+                const response = await fetch('https://api.ocr.space/parse/image', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                // Display results
+                displayResults(data);
+
+            } catch (error) {
+                console.error('OCR Error:', error);
+                showError(`Failed to process image: ${error.message}`);
+            } finally {
+                processBtn.disabled = false;
+                processBtn.textContent = '🚀 Process with OCR';
+            }
+        });
+
+        // Helper function to read file as base64
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Display results function
+        function displayResults(data) {
+            resultBox.className = 'result-box show';
+            
+            if (data.OCRExitCode === 1 && data.ParsedResults && data.ParsedResults.length > 0) {
+                const extractedText = data.ParsedResults[0].ParsedText || 'No text extracted';
+                const errorMessage = data.ParsedResults[0].ErrorMessage || '';
+                
+                if (errorMessage) {
+                    showError(`OCR completed with warnings: ${errorMessage}`);
+                    return;
+                }
+
+                resultBox.classList.add('success');
+                resultTitle.textContent = '✅ OCR Successful!';
+                resultContent.textContent = extractedText;
+                updateStatus('success', 'OCR completed successfully!');
+                
+                // Log the full response for debugging
+                console.log('OCR Response:', data);
+                
+            } else {
+                const errorMsg = data.ErrorMessage || data.ParsedResults?.[0]?.ErrorMessage || 'Unknown error occurred';
+                showError(`OCR failed: ${errorMsg}`);
+            }
+        }
+
+        // Show error function
+        function showError(message) {
+            resultBox.classList.add('show', 'error');
+            resultTitle.textContent = '❌ Error';
+            resultContent.textContent = message;
+            updateStatus('error', 'Processing failed');
+        }
+
+        // Update status function
+        function updateStatus(state, text) {
+            statusIndicator.className = `status-indicator ${state}`;
+            statusText.textContent = text;
+            
+            const badgeText = {
+                'idle': 'Ready',
+                'running': 'Processing...',
+                'success': 'Done ✓',
+                'error': 'Error ✗'
+            };
+            statusBadge.textContent = badgeText[state] || 'Ready';
+            statusBadge.className = `badge ${state}`;
+        }
+
+        // Drag and drop support
+        document.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+
+        // Keyboard shortcut: Enter to process
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !processBtn.disabled) {
+                processBtn.click();
+            }
+        });
+
+        console.log('🚀 n8n OCR Workflow Demo loaded!');
+        console.log('📋 Instructions:');
+        console.log('1. Upload an image or PDF');
+        console.log('2. Enter your OCR.space API key (or use "helloworld" for demo)');
+        console.log('3. Click "Process with OCR" to extract text');
+        console.log('4. Results will appear below');
+        console.log('\n💡 Tip: The "helloworld" API key works for testing with limited accuracy');
+    </script>
+</body>
+</html>
