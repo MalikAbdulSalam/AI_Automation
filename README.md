@@ -22,6 +22,10 @@
 
 [Lecture 9 : Error Handling of HTTP node](https://malikabdulsalam.github.io/AI_Automation/11-free_api_ursl.html)
 
+[Lecture 10 : Email Classification](https://malikabdulsalam.github.io/AI_Automation/12-email_classification.html)
+
+[Lecture 11 : OCR](https://malikabdulsalam.github.io/AI_Automation/13-OCR.html)
+
 
 
 
