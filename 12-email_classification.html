@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Classifier – Full Node Settings Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            padding: 2.5rem 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #0f172a;
+            margin-bottom: 0.3rem;
+        }
+        h1 i { color: #e11d48; }
+        .subhead {
+            color: #475569;
+            font-size: 1.1rem;
+            border-left: 5px solid #e11d48;
+            padding-left: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 1rem;
+            margin-bottom: 2rem;
+        }
+        .badge {
+            background: #f1f5f9;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .badge i { color: #e11d48; width: 1rem; }
+        .node-block {
+            background: #f8fafc;
+            border-radius: 1.2rem;
+            padding: 1.5rem 1.8rem;
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+            transition: 0.15s;
+        }
+        .node-block:hover { border-color: #cbd5e1; background: #fafcff; }
+        .node-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.3rem;
+        }
+        .node-title i { color: #e11d48; font-size: 1.4rem; width: 2rem; }
+        .node-meta {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .node-meta span i { margin-right: 0.3rem; color: #475569; }
+        .setting-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0.5rem 1.5rem;
+            background: white;
+            padding: 1rem 1.2rem;
+            border-radius: 1rem;
+            margin-top: 0.8rem;
+            border: 1px solid #eef2f6;
+        }
+        .setting-key {
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .setting-key i { color: #64748b; font-size: 0.85rem; width: 1.2rem; }
+        .setting-value {
+            color: #0f172a;
+            word-break: break-word;
+        }
+        .setting-value code {
+            background: #eef2f6;
+            padding: 0.1rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #be123c;
+        }
+        .setting-value .highlight {
+            background: #fef9c3;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+        .code-snip {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1rem 1.2rem;
+            border-radius: 0.8rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin: 0.8rem 0 0.2rem 0;
+        }
+        .code-snip code { background: transparent; color: inherit; padding: 0; }
+        .example-box {
+            background: #f1f5f9;
+            border-left: 4px solid #e11d48;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.6rem;
+            margin: 0.8rem 0;
+            font-size: 0.95rem;
+        }
+        .example-box strong { color: #0f172a; }
+        hr { margin: 2rem 0; border: 0; border-top: 2px dashed #e2e8f0; }
+        .footer {
+            margin-top: 2.5rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1.5rem 1rem; }
+            .setting-grid { grid-template-columns: 1fr; gap: 0.2rem; }
+            .node-title { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1><i class="fas fa-envelope-open-text"></i> Email Classifier Node Settings</h1>
+    <div class="subhead">Complete reference for building an AI-powered email router in n8n using Schedule Trigger</div>
+    <div class="badge-group">
+        <span class="badge"><i class="fas fa-bolt"></i> n8n v1.0+</span>
+        <span class="badge"><i class="fas fa-google"></i> Gmail + Sheets</span>
+        <span class="badge"><i class="fas fa-robot"></i> LLM (OpenAI / Ollama)</span>
+        <span class="badge"><i class="fas fa-telegram"></i> Telegram notifications</span>
+    </div>
+
+    <!-- ============ NODE 1 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-clock"></i> 1. Schedule Trigger</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node type: <strong>Schedule Trigger</strong></span>
+            <span><i class="fas fa-sync-alt"></i> Trigger: <strong>Every 5 minutes</strong></span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-calendar-alt"></i> Trigger Times</div>
+            <div class="setting-value"><span class="highlight">Every 5 minutes</span> (or custom CRON)</div>
+            
+            <div class="setting-key"><i class="fas fa-clock"></i> CRON Expression</div>
+            <div class="setting-value"><code>*/5 * * * *</code> (runs at 0, 5, 10, ... minutes past each hour)</div>
+            
+            <div class="setting-key"><i class="fas fa-cog"></i> Options</div>
+            <div class="setting-value">
+                <code>Time zone: UTC</code> (or your local timezone)<br>
+                <code>Ignore previous executions: true</code> (prevents backfill)
+            </div>
+            
+            <div class="setting-key"><i class="fas fa-play-circle"></i> Output</div>
+            <div class="setting-value">No data output – triggers workflow execution; next node fetches emails</div>
+        </div>
+        <div class="example-box">
+            <strong>Note:</strong> The Schedule Trigger does not pass any email data. The Gmail node (next step) will fetch unread emails each time the workflow runs.
+        </div>
+    </div>
+
+    <!-- ============ NODE 2 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-envelope"></i> 2. Gmail Get Messages</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node type: <strong>Gmail</strong></span>
+            <span><i class="fas fa-cog"></i> Operation: <strong>Get Messages</strong></span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-key"></i> Credential</div>
+            <div class="setting-value">OAuth2 – Gmail (select your connected account)</div>
+            
+            <div class="setting-key"><i class="fas fa-filter"></i> Filter / Query</div>
+            <div class="setting-value"><code>is:unread in:inbox -category:promotions -category:social</code></div>
+            
+            <div class="setting-key"><i class="fas fa-hashtag"></i> Max Results</div>
+            <div class="setting-value"><span class="highlight">10</span> (adjust based on volume)</div>
+            
+            <div class="setting-key"><i class="fas fa-check-circle"></i> Mark as read</div>
+            <div class="setting-value">Enabled (prevents re-processing)</div>
+            
+            <div class="setting-key"><i class="fas fa-file-alt"></i> Options</div>
+            <div class="setting-value"><code>Include attachments: false</code> · <code>Format: Full</code></div>
+        </div>
+        <div class="example-box">
+            <strong>Important:</strong> This node returns an array of unread messages. The workflow will process each email individually.
+        </div>
+    </div>
+
+    <!-- ============ NODE 3 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-code"></i> 3. Code (Clean HTML + Extract Fields)</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node type: <strong>Code</strong></span>
+            <span><i class="fas fa-language"></i> JavaScript (ES6)</span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-code"></i> Code</div>
+            <div class="setting-value">
+                <div class="code-snip"><code>const email = $input.first().json;
+let body = email.bodyHtml || email.body || '';
+body = body.replace(/&lt;[^&gt;]*&gt;/g, ' ').replace(/\s+/g, ' ').trim();
+return {
+  id: email.id,
+  from: email.from,
+  subject: email.subject,
+  date: email.date,
+  body: body.slice(0, 15000)
+};</code></div>
+            </div>
+            <div class="setting-key"><i class="fas fa-cog"></i> Mode</div>
+            <div class="setting-value"><span class="highlight">Run once for each item</span> (default)</div>
+        </div>
+    </div>
+
+    <!-- ============ NODE 4 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-brain"></i> 4. LLM Chain (Classifier)</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node: <strong>AI Agent (or Basic LLM Chain)</strong></span>
+            <span><i class="fas fa-server"></i> Model: <strong>gpt-4o-mini</strong> / <strong>ollama/llama3.2</strong></span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-key"></i> Credential</div>
+            <div class="setting-value">OpenAI API (or OpenRouter / Ollama)</div>
+            
+            <div class="setting-key"><i class="fas fa-pencil-alt"></i> System Message</div>
+            <div class="setting-value">
+                <div class="code-snip" style="font-size:0.8rem;"><code>You are an email classifier. Classify into: Applied, Offer, Rejection, or Other. 
+Extract company name, job position, and feedback. Output ONLY valid JSON:
+{
+  "classification": "Applied",
+  "company": "string",
+  "position": "string", 
+  "feedback": "string"
+}</code></div>
+            </div>
+            
+            <div class="setting-key"><i class="fas fa-user"></i> User Message</div>
+            <div class="setting-value"><code>Email subject: {{ $json.subject }} <br> Body: {{ $json.body }}</code></div>
+            
+            <div class="setting-key"><i class="fas fa-sliders-h"></i> Options</div>
+            <div class="setting-value">Temperature: <span class="highlight">0.0</span> (deterministic) · Max tokens: 300</div>
+            
+            <div class="setting-key"><i class="fas fa-code-branch"></i> Response Format</div>
+            <div class="setting-value"><span class="highlight">JSON</span> (enforce via structured output if available)</div>
+        </div>
+    </div>
+
+    <!-- ============ NODE 5 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-code-branch"></i> 5. Switch (Route by Classification)</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node: <strong>Switch</strong></span>
+            <span><i class="fas fa-random"></i> Mode: <strong>Expression</strong></span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-arrow-right"></i> Routing Rules</div>
+            <div class="setting-value">
+                <strong>Rules:</strong><br>
+                <code>Rule 1: classification == "Applied"</code> -> output 0<br>
+                <code>Rule 2: classification == "Offer"</code> -> output 1<br>
+                <code>Rule 3: classification == "Rejection"</code> -> output 2<br>
+                <code>Rule 4: classification == "Other"</code> -> output 3 (fallback)
+            </div>
+            <div class="setting-key"><i class="fas fa-cog"></i> Data Property</div>
+            <div class="setting-value"><code>{{ $json.classification }}</code></div>
+        </div>
+        <div class="example-box">
+            <strong>Tip:</strong> You can add more categories (e.g., Support, Invoice, Personal) by extending the switch rules.
+        </div>
+    </div>
+
+    <!-- ============ NODE 6 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-table"></i> 6. Google Sheets (Append Row)</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node: <strong>Google Sheets</strong></span>
+            <span><i class="fas fa-cog"></i> Operation: <strong>Append</strong></span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-key"></i> Credential</div>
+            <div class="setting-value">OAuth2 – Google Sheets</div>
+            
+            <div class="setting-key"><i class="fas fa-file"></i> Spreadsheet ID</div>
+            <div class="setting-value"><code>1ABC123... (from the sheet URL)</code></div>
+            
+            <div class="setting-key"><i class="fas fa-list-ol"></i> Sheet Name</div>
+            <div class="setting-value">e.g., <span class="highlight">Applied</span> (connect to Switch output 0)</div>
+            
+            <div class="setting-key"><i class="fas fa-edit"></i> Row Data (Columns)</div>
+            <div class="setting-value">
+                <code>[ {{ $json.date }}, {{ $json.from }}, {{ $json.subject }}, {{ $json.classification }}, {{ $json.company }}, {{ $json.position }}, {{ $json.feedback }} ]</code>
+            </div>
+            
+            <div class="setting-key"><i class="fas fa-ellipsis-h"></i> Options</div>
+            <div class="setting-value"><code>Value render: Auto</code> · <code>Batch size: 1</code></div>
+        </div>
+        <div style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="badge"><i class="fas fa-copy"></i> Duplicate for Offer, Rejection, Other</span>
+        </div>
+    </div>
+
+    <!-- ============ NODE 7 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-tag"></i> 7. Gmail Add Label</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node: <strong>Gmail</strong></span>
+            <span><i class="fas fa-cog"></i> Operation: <strong>Add Label</strong></span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-key"></i> Credential</div>
+            <div class="setting-value">OAuth2 – Gmail</div>
+            
+            <div class="setting-key"><i class="fas fa-id-card"></i> Message ID</div>
+            <div class="setting-value"><code>{{ $json.id }}</code> (from the cleaned email data)</div>
+            
+            <div class="setting-key"><i class="fas fa-tags"></i> Label Name</div>
+            <div class="setting-value">
+                Use expression: <code>{{ $json.classification }}</code> (dynamic label)<br>
+                Or static: <code>Work</code> / <code>Personal</code>
+            </div>
+            <div class="setting-key"><i class="fas fa-cog"></i> Options</div>
+            <div class="setting-value"><code>Create label if not exists: Enabled</code></div>
+        </div>
+    </div>
+
+    <!-- ============ NODE 8 ============ -->
+    <div class="node-block">
+        <div class="node-title"><i class="fas fa-bell"></i> 8. Telegram Notification</div>
+        <div class="node-meta">
+            <span><i class="fas fa-tag"></i> Node: <strong>Telegram</strong></span>
+            <span><i class="fas fa-cog"></i> Operation: <strong>Send Message</strong></span>
+        </div>
+        <div class="setting-grid">
+            <div class="setting-key"><i class="fas fa-key"></i> Credential</div>
+            <div class="setting-value">Telegram Bot token (from BotFather)</div>
+            
+            <div class="setting-key"><i class="fas fa-at"></i> Chat ID</div>
+            <div class="setting-value"><code>123456789</code> (your user or group chat ID)</div>
+            
+            <div class="setting-key"><i class="fas fa-edit"></i> Message Text</div>
+            <div class="setting-value">
+                <div class="code-snip" style="font-size:0.8rem;"><code>New {{ $json.classification }} email
+From: {{ $json.from }}
+Subject: {{ $json.subject }}
+Company: {{ $json.company }}
+Feedback: {{ $json.feedback }}</code></div>
+            </div>
+            <div class="setting-key"><i class="fas fa-cog"></i> Parse Mode</div>
+            <div class="setting-value"><span class="highlight">None</span> (or Markdown for formatting)</div>
+        </div>
+        <div class="example-box">
+            <strong>Optional:</strong> Add conditional logic to send notifications only for "Offer" or "Rejection" to avoid alerts for every email.
+        </div>
+    </div>
+
+    <!-- ============ SUMMARY ============ -->
+    <hr>
+    <h2 style="display:flex; align-items:center; gap:0.5rem; margin: 1.5rem 0 1rem 0; font-size:1.8rem;">
+        <i class="fas fa-sitemap"></i> Complete Workflow Overview
+    </h2>
+    <div style="background:#f1f5f9; border-radius:1.2rem; padding:1.5rem; display:flex; flex-wrap:wrap; gap:0.8rem 2rem; align-items:center;">
+        <span><i class="fas fa-arrow-right" style="color:#e11d48;"></i> Schedule Trigger</span>
+        <span><i class="fas fa-arrow-right" style="color:#e11d48;"></i> Gmail Get Messages</span>
+        <span><i class="fas fa-arrow-right" style="color:#e11d48;"></i> Code (clean)</span>
+        <span><i class="fas fa-arrow-right" style="color:#e11d48;"></i> LLM Classify</span>
+        <span><i class="fas fa-arrow-right" style="color:#e11d48;"></i> Switch</span>
+        <span><i class="fas fa-arrow-right" style="color:#e11d48;"></i> Sheets / Label / Telegram</span>
+    </div>
+
+    <!-- Credentials summary -->
+    <h3 style="margin-top:2rem;"><i class="fas fa-key" style="color:#e11d48;"></i> Credentials Required</h3>
+    <ul style="margin-left:1.8rem;">
+        <li><strong>Gmail OAuth2</strong> – for reading emails and adding labels.</li>
+        <li><strong>Google Sheets OAuth2</strong> – for appending rows.</li>
+        <li><strong>LLM API</strong> – OpenAI / OpenRouter / Ollama (local) – choose one.</li>
+        <li><strong>Telegram Bot</strong> – optional, for notifications.</li>
+    </ul>
+
+    <!-- Troubleshooting -->
+    <h3 style="margin-top:1.5rem;"><i class="fas fa-wrench" style="color:#e11d48;"></i> Troubleshooting</h3>
+    <ul style="margin-left:1.8rem;">
+        <li><strong>No emails processed?</strong> Ensure the filter <code>is:unread</code> is correct and there are unread emails in the inbox.</li>
+        <li><strong>LLM returns raw text not JSON?</strong> Set <code>temperature=0</code> and enforce JSON in the system prompt.</li>
+        <li><strong>Google Sheets fails?</strong> Verify the sheet name and column count match the row data.</li>
+        <li><strong>Telegram not sending?</strong> Verify the Chat ID and bot token; test with a simple node first.</li>
+        <li><strong>Schedule not running?</strong> Ensure the workflow is set to "Active" and the timezone is correct.</li>
+    </ul>
+
+    <!-- Footer -->
+    <div class="footer">
+        <span><i class="fas fa-code"></i> Node settings reference – Email Classifier with Schedule Trigger</span>
+        <span><i class="fas fa-license"></i> MIT – free to adapt</span>
+    </div>
+
+</div>
+</body>
+</html>
+
+remove pictures/ icons /emojes etc
